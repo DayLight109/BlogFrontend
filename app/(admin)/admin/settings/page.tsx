@@ -215,6 +215,77 @@ export default function AdminSettingsPage() {
           />
         </Field>
       </Section>
+
+      {/* Theme */}
+      <Section title="Theme" caption="配色">
+        <p className="text-xs text-muted-foreground">
+          Accent 色会出现在链接、active 导航、"in between" 这类强调文字上。换一下就能立刻看到效果。
+        </p>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          <ColorField
+            label="Accent (Light mode)"
+            value={form["theme.accent"]}
+            onChange={(v) => set("theme.accent", v)}
+          />
+          <ColorField
+            label="Accent (Dark mode)"
+            value={form["theme.accent_dark"]}
+            onChange={(v) => set("theme.accent_dark", v)}
+          />
+        </div>
+
+        <div>
+          <p className="caps mb-2 text-xs text-muted-foreground">Presets</p>
+          <div className="flex flex-wrap gap-2">
+            {ACCENT_PRESETS.map((p) => (
+              <button
+                key={p.name}
+                type="button"
+                onClick={() => {
+                  set("theme.accent", p.light);
+                  set("theme.accent_dark", p.dark);
+                }}
+                className="group inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm transition-colors hover:border-site-accent"
+              >
+                <span
+                  className="inline-block size-3.5 rounded-full"
+                  style={{ backgroundColor: p.light }}
+                  aria-hidden
+                />
+                <span
+                  className="inline-block size-3.5 rounded-full"
+                  style={{ backgroundColor: p.dark }}
+                  aria-hidden
+                />
+                <span className="text-foreground">{p.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-md border border-border bg-muted/30 p-4">
+          <p className="caps mb-3 text-xs text-muted-foreground">Preview</p>
+          <p
+            className="font-display text-2xl leading-tight tracking-tight"
+            style={{ color: "var(--foreground)" }}
+          >
+            Writing about <em className="font-light">code</em>, and the small
+            ideas{" "}
+            <span
+              style={{
+                color:
+                  typeof document !== "undefined" &&
+                  document.documentElement.classList.contains("dark")
+                    ? form["theme.accent_dark"]
+                    : form["theme.accent"],
+              }}
+            >
+              in between.
+            </span>
+          </p>
+        </div>
+      </Section>
     </section>
   );
 }
@@ -258,6 +329,37 @@ function Field({
     <div className="space-y-1.5">
       <Label htmlFor={id}>{label}</Label>
       {children}
+    </div>
+  );
+}
+
+function ColorField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label>{label}</Label>
+      <div className="flex items-center gap-2">
+        <input
+          type="color"
+          value={/^#[0-9a-fA-F]{6}$/.test(value) ? value : "#000000"}
+          onChange={(e) => onChange(e.target.value)}
+          className="h-9 w-12 cursor-pointer rounded border border-border bg-background p-0.5"
+        />
+        <Input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="#9a2e20"
+          maxLength={24}
+          className="font-mono text-sm"
+        />
+      </div>
     </div>
   );
 }
