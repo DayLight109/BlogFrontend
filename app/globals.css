@@ -2,43 +2,50 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Editorial site tokens */
+  --color-site-accent: var(--site-accent);
+  --color-site-accent-soft: var(--site-accent-soft);
+  --color-site-accent-ghost: var(--site-accent-ghost);
+  --color-site-rule: var(--site-rule);
+  --color-paper-soft: var(--site-paper-soft);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,85 +53,760 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --font-sans:
+    var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Noto Sans CJK SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, "SF Mono", Consolas, Menlo, monospace;
+  --font-display:
+    var(--font-fraunces), "Noto Serif CJK SC", "Source Han Serif SC",
+    "Source Han Serif CN", "Songti SC", "STSong", Georgia, serif;
+  --font-reading:
+    var(--font-source-serif), "Noto Serif CJK SC", "Source Han Serif SC",
+    "Source Han Serif CN", "Songti SC", "STSong", Georgia, serif;
 }
 
+/* =========================================================
+   Editorial palette — cream paper, espresso ink, spine red
+   ========================================================= */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(0.968 0.02 85);
+  --foreground: oklch(0.245 0.028 55);
+  --card: oklch(0.974 0.018 84);
+  --card-foreground: oklch(0.245 0.028 55);
+  --popover: oklch(0.974 0.018 84);
+  --popover-foreground: oklch(0.245 0.028 55);
+  --primary: oklch(0.28 0.03 55);
+  --primary-foreground: oklch(0.968 0.02 85);
+  --secondary: oklch(0.93 0.017 80);
+  --secondary-foreground: oklch(0.28 0.03 55);
+  --muted: oklch(0.93 0.017 80);
+  --muted-foreground: oklch(0.48 0.022 55);
+  --accent: oklch(0.93 0.017 80);
+  --accent-foreground: oklch(0.28 0.03 55);
+  --destructive: oklch(0.55 0.19 27);
+  --border: oklch(0.86 0.012 75);
+  --input: oklch(0.86 0.012 75);
+  --ring: oklch(0.48 0.145 25);
+  --chart-1: oklch(0.62 0.14 30);
+  --chart-2: oklch(0.55 0.09 50);
+  --chart-3: oklch(0.48 0.05 80);
+  --chart-4: oklch(0.40 0.04 100);
+  --chart-5: oklch(0.32 0.03 55);
+  --radius: 0.25rem;
+
+  --sidebar: oklch(0.96 0.018 85);
+  --sidebar-foreground: oklch(0.245 0.028 55);
+  --sidebar-primary: oklch(0.48 0.145 25);
+  --sidebar-primary-foreground: oklch(0.968 0.02 85);
+  --sidebar-accent: oklch(0.93 0.017 80);
+  --sidebar-accent-foreground: oklch(0.28 0.03 55);
+  --sidebar-border: oklch(0.86 0.012 75);
+  --sidebar-ring: oklch(0.48 0.145 25);
+
+  /* Site — spine red accent, hairline rule, soft paper */
+  --site-accent: oklch(0.48 0.145 25);
+  --site-accent-soft: oklch(0.48 0.145 25 / 0.22);
+  --site-accent-ghost: oklch(0.48 0.145 25 / 0.1);
+  --site-rule: oklch(0.86 0.012 75);
+  --site-paper-soft: oklch(0.935 0.016 78);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.93 0.019 85);
+  --card: oklch(0.055 0 0);
+  --card-foreground: oklch(0.93 0.019 85);
+  --popover: oklch(0.055 0 0);
+  --popover-foreground: oklch(0.93 0.019 85);
+  --primary: oklch(0.93 0.019 85);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.1 0 0);
+  --secondary-foreground: oklch(0.93 0.019 85);
+  --muted: oklch(0.1 0 0);
+  --muted-foreground: oklch(0.62 0.012 60);
+  --accent: oklch(0.1 0 0);
+  --accent-foreground: oklch(0.93 0.019 85);
+  --destructive: oklch(0.66 0.18 25);
+  --border: oklch(0.18 0 0);
+  --input: oklch(0.18 0 0);
+  --ring: oklch(0.72 0.13 25);
+  --chart-1: oklch(0.72 0.13 25);
+  --chart-2: oklch(0.66 0.10 50);
+  --chart-3: oklch(0.58 0.07 80);
+  --chart-4: oklch(0.52 0.05 100);
+  --chart-5: oklch(0.44 0.03 55);
+
+  --sidebar: oklch(0.055 0 0);
+  --sidebar-foreground: oklch(0.93 0.019 85);
+  --sidebar-primary: oklch(0.72 0.13 25);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.1 0 0);
+  --sidebar-accent-foreground: oklch(0.93 0.019 85);
+  --sidebar-border: oklch(0.18 0 0);
+  --sidebar-ring: oklch(0.72 0.13 25);
+
+  --site-accent: oklch(0.72 0.13 25);
+  --site-accent-soft: oklch(0.72 0.13 25 / 0.26);
+  --site-accent-ghost: oklch(0.72 0.13 25 / 0.14);
+  --site-rule: oklch(0.18 0 0);
+  --site-paper-soft: oklch(0.075 0 0);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      "ss01", "ss03", "cv11", "cv06";
+  }
+
+  /* Subtle paper noise — no glass, no gradients, just texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+  }
+  .dark body::before {
+    opacity: 0.12;
+    mix-blend-mode: screen;
+  }
+
+  ::selection {
+    background: var(--site-accent-soft);
+    color: var(--foreground);
+  }
+}
+
+/* =========================================================
+   Utilities
+   ========================================================= */
+@layer utilities {
+  .caps {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .hairline {
+    border: none;
+    height: 1px;
+    background: var(--site-rule);
+  }
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-reading {
+    font-family: var(--font-reading);
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .reveal {
+    animation: reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+/* =========================================================
+   Editorial prose — for `contentHtml`
+   ========================================================= */
+.prose-editorial {
+  font-family: var(--font-reading);
+  font-size: 1.13rem;
+  line-height: 1.78;
+  color: var(--foreground);
+  max-width: none;
+}
+.prose-editorial > * + * {
+  margin-top: 1.3em;
+}
+.prose-editorial h1,
+.prose-editorial h2,
+.prose-editorial h3,
+.prose-editorial h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  color: var(--foreground);
+  scroll-margin-top: 5rem;
+  line-height: 1.24;
+}
+.prose-editorial h1 {
+  display: none;
+} /* title is rendered in the article header already */
+.prose-editorial h2 {
+  font-size: 1.9rem;
+  margin-top: 2.8em;
+  margin-bottom: 0.4em;
+  position: relative;
+}
+.prose-editorial h2::before {
+  content: "";
+  position: absolute;
+  left: -1.75rem;
+  top: 0.9em;
+  width: 0.9rem;
+  height: 2px;
+  background: var(--site-accent);
+}
+.prose-editorial h3 {
+  font-size: 1.4rem;
+  margin-top: 2em;
+  margin-bottom: 0.3em;
+}
+.prose-editorial h4 {
+  font-size: 1.15rem;
+  margin-top: 1.6em;
+}
+
+.prose-editorial a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--site-accent-soft);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color 180ms ease, color 180ms ease;
+}
+.prose-editorial a:hover {
+  color: var(--site-accent);
+  text-decoration-color: var(--site-accent);
+}
+
+.prose-editorial strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+.prose-editorial em {
+  font-style: italic;
+}
+
+/* Drop cap: first letter of first paragraph in red display serif */
+.prose-editorial > p:first-of-type::first-letter,
+.prose-editorial > h1 + p::first-letter {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 4.4em;
+  line-height: 0.88;
+  float: left;
+  margin-right: 0.08em;
+  margin-top: 0.06em;
+  margin-bottom: -0.16em;
+  color: var(--site-accent);
+}
+
+/* Blockquote: indented italic, hairline accent stub instead of pipe */
+.prose-editorial blockquote {
+  border: none;
+  padding-left: 1.5rem;
+  margin-left: 0;
+  margin-block: 1.6em;
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.18em;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+.prose-editorial blockquote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 1rem;
+  height: 1px;
+  background: var(--site-accent);
+}
+.prose-editorial blockquote p {
+  margin: 0;
+}
+
+/* HR = asterism */
+.prose-editorial hr {
+  border: none;
+  height: auto;
+  text-align: center;
+  margin: 3em 0;
+}
+.prose-editorial hr::before {
+  content: "⁂";
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--muted-foreground);
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+
+/* Lists */
+.prose-editorial ul,
+.prose-editorial ol {
+  padding-left: 1.6rem;
+}
+.prose-editorial ul {
+  list-style: none;
+}
+.prose-editorial ul > li {
+  position: relative;
+  padding-left: 0.25em;
+  margin-block: 0.45em;
+}
+.prose-editorial ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.75em;
+  width: 0.45rem;
+  height: 1px;
+  background: var(--site-accent);
+}
+.prose-editorial ol {
+  list-style: decimal;
+}
+.prose-editorial ol > li {
+  margin-block: 0.45em;
+}
+.prose-editorial ol > li::marker {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  font-size: 0.88em;
+}
+
+/* Inline code */
+.prose-editorial :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--foreground);
+  background: var(--site-paper-soft);
+  padding: 0.12em 0.42em;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+
+/* Block code — paper-soft background, hairline + spine-red left rule */
+.prose-editorial pre {
+  background: var(--site-paper-soft);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.72;
+  padding: 1.25rem 1.5rem 1.25rem 1.75rem;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--site-accent);
+  overflow-x: auto;
+  margin-block: 2rem;
+  position: relative;
+}
+.prose-editorial pre code {
+  background: transparent !important;
+  padding: 0;
+  font-size: inherit;
+  font-weight: 400;
+  border: none;
+}
+
+/* Shiki wrapper (figure.code-block) — language tag + copy button overlay */
+.prose-editorial figure.code-block {
+  position: relative;
+  margin: 2rem 0;
+  padding: 0;
+}
+.prose-editorial figure.code-block pre {
+  margin: 0;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--site-accent);
+  padding: 1.5rem 1.5rem 1.25rem 1.75rem;
+  background: var(--site-paper-soft);
+  overflow-x: auto;
+}
+
+/* Shiki dual-theme: swap variables at dark */
+.prose-editorial figure.code-block .shiki,
+.prose-editorial figure.code-block .shiki span {
+  background-color: var(--shiki-light-bg) !important;
+  color: var(--shiki-light) !important;
+}
+.dark .prose-editorial figure.code-block .shiki,
+.dark .prose-editorial figure.code-block .shiki span {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+/* Keep our paper-soft wrapper bg; blank out shiki's own bg */
+.prose-editorial figure.code-block .shiki {
+  background-color: transparent !important;
+}
+.dark .prose-editorial figure.code-block .shiki {
+  background-color: transparent !important;
+}
+
+.code-lang-tag {
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  opacity: 0.55;
+  pointer-events: none;
+  user-select: none;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+.prose-editorial figure.code-block:hover .code-copy-btn,
+.code-copy-btn:focus-visible {
+  opacity: 1;
+}
+.code-copy-btn:hover {
+  color: var(--foreground);
+  border-color: var(--border);
+  background: var(--background);
+}
+.code-copy-btn .icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  stroke-width: 1.6;
+}
+.code-copy-btn .icon-check {
+  display: none;
+}
+.code-copy-btn .code-copy-label {
+  line-height: 1;
+}
+.prose-editorial figure.code-block[data-copied="1"] .code-copy-btn {
+  color: var(--site-accent);
+  border-color: var(--site-accent);
+  opacity: 1;
+}
+.prose-editorial figure.code-block[data-copied="1"] .code-copy-btn .icon-copy {
+  display: none;
+}
+.prose-editorial figure.code-block[data-copied="1"] .code-copy-btn .icon-check {
+  display: inline-block;
+}
+.prose-editorial figure.code-block[data-copied="1"] .code-copy-btn .code-copy-label::before {
+  content: "copied";
+}
+.prose-editorial figure.code-block[data-copied="1"] .code-copy-btn .code-copy-label {
+  font-size: 0;
+}
+
+/* Images */
+.prose-editorial img {
+  margin-block: 2.5rem;
+  border: 1px solid var(--border);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tables */
+.prose-editorial table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.96em;
+  margin-block: 2em;
+}
+.prose-editorial th {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted-foreground);
+  text-align: left;
+  padding: 0.7em 1em;
+  border-bottom: 1.5px solid var(--foreground);
+}
+.prose-editorial td {
+  padding: 0.7em 1em;
+  border-bottom: 1px solid var(--border);
+}
+
+/* TaskList items (GFM - [ ] / - [x]) */
+.prose-editorial input[type="checkbox"] {
+  margin-right: 0.5em;
+  accent-color: var(--site-accent);
+}
+
+/* =========================================================
+   MOTION — reading progress (CSS scroll-timeline)
+   A 2px spine-red line at the very top of article pages that
+   fills with scroll. No JS, no repaint. Gracefully hidden on
+   browsers without scroll-timeline support.
+   ========================================================= */
+.reading-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--site-accent);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: reading-fill linear forwards;
+    animation-timeline: scroll(root);
+    z-index: 80;
+    pointer-events: none;
+  }
+  @keyframes reading-fill {
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* =========================================================
+   MOTION — prose paragraphs fade up as they enter viewport
+   (CSS view-timeline — no IntersectionObserver, one-shot,
+   doesn't retrigger on scroll-back because animation-timeline
+   ties progress to element position, not events)
+   ========================================================= */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .prose-editorial > p,
+    .prose-editorial > h2,
+    .prose-editorial > h3,
+    .prose-editorial > ul,
+    .prose-editorial > ol,
+    .prose-editorial > pre,
+    .prose-editorial > blockquote,
+    .prose-editorial > img,
+    .prose-editorial > figure,
+    .prose-editorial > hr,
+    .prose-editorial > table {
+      animation: prose-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 8% entry 45%;
+    }
+    @keyframes prose-enter {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+/* =========================================================
+   MOTION — View Transitions
+   Default cross-fade is fine for most navigation. Post-title
+   elements carry `view-transition-name: post-title-<id>` so
+   the clicked card title morphs smoothly into the article h1.
+   ========================================================= */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Shared post-title morph — slightly slower for legibility */
+::view-transition-group(*) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================================================
+   MOTION — theme toggle circular reveal
+   Opt-in via `html[data-theme-transition]`. Sets CSS vars
+   --tt-x / --tt-y / --tt-r from the button position.
+   ========================================================= */
+html[data-theme-transition="true"]::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  z-index: 1;
+}
+html[data-theme-transition="true"]::view-transition-new(root) {
+  animation: theme-reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  mix-blend-mode: normal;
+  z-index: 2;
+}
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--tt-x, 50%) var(--tt-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--tt-r, 150vmax) at var(--tt-x, 50%) var(--tt-y, 50%));
+  }
+}
+
+/* =========================================================
+   MOTION — animated underline for titles (scaleX from left)
+   Apply `.title-hover-underline` to a block that should get a
+   hairline drawn beneath it when an ancestor `.group` is hovered
+   or the element itself is hovered.
+   ========================================================= */
+.title-hover-underline {
+  display: inline-block;
+  position: relative;
+}
+.title-hover-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.08em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .title-hover-underline::after,
+.title-hover-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   MOTION — form field underline expanding from center
+   Wrap a field in `.field-underline`, layer two spans:
+   `.field-underline-static` (always-on hairline) and
+   `.field-underline-focus` (accent, scaleX from center on focus).
+   ========================================================= */
+.field-underline {
+  position: relative;
+}
+.field-underline-static {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--site-rule);
+  pointer-events: none;
+}
+.field-underline-focus {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--site-accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.field-underline:focus-within .field-underline-focus {
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   MOTION — magnetic button
+   Controlled by --mag-x / --mag-y set by MagneticButton on
+   mousemove. Active press adds a 1px settle.
+   ========================================================= */
+.magnetic-btn {
+  transform: translate3d(var(--mag-x, 0), var(--mag-y, 0), 0);
+  transition:
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 260ms ease;
+  will-change: transform;
+}
+.magnetic-btn:active {
+  transform: translate3d(
+      var(--mag-x, 0),
+      calc(var(--mag-y, 0) + 1px),
+      0
+    )
+    scale(0.985);
+  transition-duration: 100ms;
+}
+.magnetic-btn:disabled {
+  --mag-x: 0;
+  --mag-y: 0;
+  transform: none;
+}
+
+/* =========================================================
+   MOTION — global reduced-motion override
+   Anything animated above still has a transition fallback,
+   but large transforms and keyframed animations are neutralized.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .magnetic-btn,
+  .reading-progress,
+  .prose-editorial > *,
+  .title-hover-underline::after,
+  .field-underline-focus {
+    animation: none !important;
+    transform: none !important;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(*) {
+    animation: none !important;
   }
 }

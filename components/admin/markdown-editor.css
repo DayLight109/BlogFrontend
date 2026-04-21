@@ -1,0 +1,134 @@
+/* Styling overrides to make @uiw/react-md-editor blend with Kiri admin. */
+
+.kiri-md-editor .w-md-editor {
+  background: var(--card) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Consolas, monospace !important;
+}
+
+/* Toolbar */
+.kiri-md-editor .w-md-editor-toolbar {
+  background: color-mix(in oklab, var(--card) 92%, var(--muted)) !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 6px 8px !important;
+}
+.kiri-md-editor .w-md-editor-toolbar ul li button {
+  color: var(--muted-foreground) !important;
+  border-radius: 4px !important;
+}
+.kiri-md-editor .w-md-editor-toolbar ul li button:hover {
+  background: var(--site-accent-ghost) !important;
+  color: var(--site-accent) !important;
+}
+.kiri-md-editor .w-md-editor-toolbar ul li.active button {
+  background: var(--site-accent-ghost) !important;
+  color: var(--site-accent) !important;
+}
+.kiri-md-editor .w-md-editor-toolbar-divider {
+  background: var(--border) !important;
+}
+
+/* Editor text area */
+.kiri-md-editor .w-md-editor-text {
+  background: transparent !important;
+}
+.kiri-md-editor .w-md-editor-text-pre > code,
+.kiri-md-editor .w-md-editor-text-input,
+.kiri-md-editor textarea.w-md-editor-text-input {
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Consolas, monospace !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: var(--foreground) !important;
+  caret-color: var(--site-accent) !important;
+}
+.kiri-md-editor .w-md-editor-text-input::selection,
+.kiri-md-editor .w-md-editor-text-input::-moz-selection {
+  background: color-mix(in oklab, var(--site-accent) 28%, transparent) !important;
+}
+
+/* Syntax highlighting tokens (in source view) — nudge towards editorial palette */
+.kiri-md-editor .token.title,
+.kiri-md-editor .token.bold {
+  color: var(--foreground) !important;
+}
+.kiri-md-editor .token.url,
+.kiri-md-editor .token.url-reference {
+  color: var(--site-accent) !important;
+}
+.kiri-md-editor .token.code,
+.kiri-md-editor .token.code-snippet {
+  color: color-mix(in oklab, var(--site-accent) 85%, var(--foreground)) !important;
+}
+.kiri-md-editor .token.blockquote {
+  color: var(--muted-foreground) !important;
+  font-style: italic !important;
+}
+
+/* Preview pane */
+.kiri-md-editor .w-md-editor-preview {
+  background: color-mix(in oklab, var(--card) 97%, var(--muted)) !important;
+  padding: 18px 22px !important;
+  border-left: 1px solid var(--border) !important;
+}
+.kiri-md-editor .wmde-markdown {
+  background: transparent !important;
+  color: var(--foreground) !important;
+  font-family: var(--font-source-serif), Georgia, serif !important;
+  font-size: 15.5px !important;
+  line-height: 1.78 !important;
+}
+.kiri-md-editor .wmde-markdown h1,
+.kiri-md-editor .wmde-markdown h2,
+.kiri-md-editor .wmde-markdown h3,
+.kiri-md-editor .wmde-markdown h4 {
+  font-family: var(--font-fraunces), Georgia, serif !important;
+  letter-spacing: -0.02em !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+.kiri-md-editor .wmde-markdown h1 { font-size: 1.9em !important; }
+.kiri-md-editor .wmde-markdown h2 { font-size: 1.5em !important; }
+.kiri-md-editor .wmde-markdown a {
+  color: var(--site-accent) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+.kiri-md-editor .wmde-markdown blockquote {
+  border-left: 2px solid var(--site-accent) !important;
+  background: transparent !important;
+  color: var(--muted-foreground) !important;
+  font-style: italic !important;
+}
+.kiri-md-editor .wmde-markdown code:not(pre code) {
+  background: var(--muted) !important;
+  color: var(--foreground) !important;
+  padding: 1px 5px !important;
+  border-radius: 3px !important;
+  font-size: 0.88em !important;
+}
+.kiri-md-editor .wmde-markdown pre {
+  background: color-mix(in oklab, var(--foreground) 5%, var(--card)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+}
+.kiri-md-editor .wmde-markdown hr {
+  border: 0 !important;
+  border-top: 1px solid var(--site-rule) !important;
+}
+.kiri-md-editor .wmde-markdown img {
+  border-radius: 4px !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Scrollbars */
+.kiri-md-editor .w-md-editor-content {
+  border-radius: 0 0 6px 6px !important;
+}
+
+/* Fullscreen fallback (hides the built-in shadow that clashes with our theme) */
+.kiri-md-editor .w-md-editor-fullscreen {
+  background: var(--background) !important;
+}
