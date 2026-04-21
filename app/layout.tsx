@@ -43,12 +43,14 @@ export const metadata: Metadata = {
 // avoids a white flash when the user prefers dark mode.
 const themeBootstrap = `(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches);if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
 
-// Accept common color formats; fall back to defaults if the admin saved garbage.
+// Only accept simple hex colors (#RGB / #RRGGBB / #RRGGBBAA). Rejecting the
+// functional forms closes a CSS-injection vector: the admin-saved value is
+// interpolated into a <style> tag, so a value like `red; } body { display:none`
+// could rewrite the stylesheet. Hex is expressive enough for an accent color.
 function sanitizeColor(v: string | undefined, fallback: string) {
   if (!v) return fallback;
   const s = v.trim();
-  if (/^#[0-9a-fA-F]{3,8}$/.test(s)) return s;
-  if (/^(rgb|rgba|hsl|hsla|oklch|oklab|color-mix)\s*\(/i.test(s)) return s;
+  if (/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(s)) return s;
   return fallback;
 }
 

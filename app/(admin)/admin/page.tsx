@@ -4,18 +4,24 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import {
   FileText,
+  FileEdit,
   Eye,
   MessagesSquare,
+  CheckCheck,
   MessageCircle,
   Tag as TagIcon,
   PenLine,
   CheckCircle2,
   Clock,
+  Pin,
+  Flame,
+  CalendarClock,
+  TrendingUp,
 } from "lucide-react";
 
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-store";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function AdminDashboard() {
   const token = useAuth((s) => s.accessToken);
@@ -36,6 +42,12 @@ export default function AdminDashboard() {
     queryFn: () =>
       api.adminListComments(token!, { status: "pending", size: 100 }),
   });
+  const commentsApproved = useQuery({
+    queryKey: ["admin", "comments", "approved"],
+    enabled: !!token,
+    queryFn: () =>
+      api.adminListComments(token!, { status: "approved", size: 100 }),
+  });
   const tags = useQuery({
     queryKey: ["tags"],
     enabled: !!token,
@@ -45,9 +57,29 @@ export default function AdminDashboard() {
   const posts = postsAll.data?.items ?? [];
   const published = posts.filter((p) => p.status === "published");
   const drafts = posts.filter((p) => p.status === "draft");
+  const pinned = posts.filter((p) => p.pinned);
   const totalViews = posts.reduce((n, p) => n + (p.viewCount ?? 0), 0);
+  const avgViews = published.length > 0 ? Math.round(totalViews / published.length) : 0;
   const totalComments = commentsAll.data?.total ?? 0;
   const pendingCount = commentsPending.data?.total ?? 0;
+  const approvedCount = commentsApproved.data?.total ?? 0;
+  const topPost = [...published].sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0))[0];
+  const lastPublished = [...published]
+    .filter((p) => p.publishedAt)
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt!).getTime() - new Date(a.publishedAt!).getTime(),
+    )[0];
+
+  const daysSinceLastPub = lastPublished
+    ? Math.max(
+        0,
+        Math.floor(
+          (Date.now() - new Date(lastPublished.publishedAt!).getTime()) /
+            (1000 * 60 * 60 * 24),
+        ),
+      )
+    : null;
 
   return (
     <section className="space-y-8">
@@ -68,35 +100,115 @@ export default function AdminDashboard() {
         </Link>
       </header>
 
-      {/* Stat cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          label="Published"
-          value={published.length}
-          helper={`${drafts.length} draft${drafts.length === 1 ? "" : "s"}`}
-          icon={FileText}
-        />
-        <StatCard
-          label="Total reads"
-          value={totalViews}
-          helper={`across ${published.length} essays`}
-          icon={Eye}
-        />
-        <StatCard
-          label="Pending review"
-          value={pendingCount}
-          helper={`${totalComments} comments total`}
-          icon={MessagesSquare}
-          accent={pendingCount > 0}
-          href="/admin/comments"
-        />
-        <StatCard
-          label="Tags"
-          value={tags.data?.items.length ?? 0}
-          helper="unique"
-          icon={TagIcon}
-          href="/admin/tags"
-        />
+      {/* Stat cards — row 1: writing */}
+      <div>
+        <p className="caps mb-3 text-muted-foreground">Writing · 写作</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            label="Published"
+            value={published.length}
+            helper={published.length === 1 ? "essay" : "essays"}
+            icon={FileText}
+          />
+          <StatCard
+            label="Drafts"
+            value={drafts.length}
+            helper={drafts.length > 0 ? "in the drawer" : "nothing cooking"}
+            icon={FileEdit}
+            href="/admin/posts?status=draft"
+          />
+          <StatCard
+            label="Pinned"
+            value={pinned.length}
+            helper="featured on home"
+            icon={Pin}
+          />
+          <StatCard
+            label="Last published"
+            value={daysSinceLastPub ?? "—"}
+            helper={
+              daysSinceLastPub === null
+                ? "never"
+                : daysSinceLastPub === 0
+                  ? "today"
+                  : `day${daysSinceLastPub === 1 ? "" : "s"} ago`
+            }
+            icon={CalendarClock}
+            accent={daysSinceLastPub !== null && daysSinceLastPub > 14}
+            isTextValue={daysSinceLastPub === null}
+          />
+        </div>
+      </div>
+
+      {/* Stat cards — row 2: readership & conversation */}
+      <div>
+        <p className="caps mb-3 text-muted-foreground">Readership · 读者</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            label="Total reads"
+            value={totalViews}
+            helper={`avg ${avgViews} / essay`}
+            icon={Eye}
+          />
+          <StatCard
+            label="Top essay"
+            value={topPost?.viewCount ?? 0}
+            helper={topPost ? truncate(topPost.title, 28) : "—"}
+            icon={Flame}
+            href={topPost ? `/admin/posts/${topPost.id}` : undefined}
+          />
+          <StatCard
+            label="Pending review"
+            value={pendingCount}
+            helper={`of ${totalComments} total`}
+            icon={MessagesSquare}
+            accent={pendingCount > 0}
+            href="/admin/comments"
+          />
+          <StatCard
+            label="Approved"
+            value={approvedCount}
+            helper="visible on site"
+            icon={CheckCheck}
+          />
+        </div>
+      </div>
+
+      {/* Stat cards — row 3: catalog */}
+      <div>
+        <p className="caps mb-3 text-muted-foreground">Catalog · 编目</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            label="Tags"
+            value={tags.data?.items.length ?? 0}
+            helper="unique across site"
+            icon={TagIcon}
+            href="/admin/tags"
+          />
+          <StatCard
+            label="Momentum"
+            value={publishedThisMonth(published)}
+            helper="published this month"
+            icon={TrendingUp}
+          />
+          <StatCard
+            label="Untagged"
+            value={
+              published.filter((p) => !p.tags || p.tags.length === 0).length
+            }
+            helper="essays missing tags"
+            icon={TagIcon}
+            accent={
+              published.filter((p) => !p.tags || p.tags.length === 0).length > 0
+            }
+          />
+          <StatCard
+            label="Spam"
+            value={(totalComments - pendingCount - approvedCount)}
+            helper="caught in review"
+            icon={MessageCircle}
+          />
+        </div>
       </div>
 
       {/* Two columns: recent posts & recent comments */}
@@ -106,7 +218,7 @@ export default function AdminDashboard() {
             <Empty text="No essays yet" />
           ) : (
             <ul className="divide-y divide-border">
-              {posts.slice(0, 5).map((p) => (
+              {posts.slice(0, 6).map((p) => (
                 <li key={p.id}>
                   <Link
                     href={`/admin/posts/${p.id}`}
@@ -124,8 +236,14 @@ export default function AdminDashboard() {
                       />
                     )}
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium text-foreground">
-                        {p.title}
+                      <p className="flex items-center gap-1.5 truncate font-medium text-foreground">
+                        <span className="truncate">{p.title}</span>
+                        {p.pinned && (
+                          <Pin
+                            className="size-3 shrink-0 text-site-accent"
+                            strokeWidth={1.8}
+                          />
+                        )}
                       </p>
                       <p className="mt-0.5 text-xs text-muted-foreground">
                         {p.status === "published"
@@ -140,12 +258,12 @@ export default function AdminDashboard() {
           )}
         </Panel>
 
-        <Panel title="Recent comments" href="/admin/comments">
+        <Panel title="Recent letters" href="/admin/comments">
           {(commentsAll.data?.items ?? []).length === 0 ? (
-            <Empty text="No comments yet" />
+            <Empty text="No letters yet" />
           ) : (
             <ul className="divide-y divide-border">
-              {(commentsAll.data?.items ?? []).slice(0, 5).map((c) => (
+              {(commentsAll.data?.items ?? []).slice(0, 6).map((c) => (
                 <li
                   key={c.id}
                   className="flex items-start gap-3 px-5 py-3.5 transition-colors hover:bg-muted/60"
@@ -179,8 +297,50 @@ export default function AdminDashboard() {
           )}
         </Panel>
       </div>
+
+      {/* Top performing essays */}
+      {published.length > 0 && (
+        <Panel title="Most read">
+          <ol className="divide-y divide-border">
+            {[...published]
+              .sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0))
+              .slice(0, 5)
+              .map((p, i) => (
+                <li key={p.id}>
+                  <Link
+                    href={`/admin/posts/${p.id}`}
+                    className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-muted/60"
+                  >
+                    <span className="caps tabular w-6 shrink-0 text-muted-foreground">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p className="min-w-0 flex-1 truncate font-medium">
+                      {p.title}
+                    </p>
+                    <span className="caps tabular shrink-0 text-muted-foreground">
+                      <span className="text-foreground">{p.viewCount}</span>{" "}
+                      reads
+                    </span>
+                  </Link>
+                </li>
+              ))}
+          </ol>
+        </Panel>
+      )}
     </section>
   );
+}
+
+function truncate(s: string, n: number): string {
+  return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s;
+}
+
+function publishedThisMonth(published: { publishedAt?: string }[]): number {
+  const now = new Date();
+  const cutoff = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+  return published.filter(
+    (p) => p.publishedAt && new Date(p.publishedAt).getTime() >= cutoff,
+  ).length;
 }
 
 function StatCard({
@@ -190,13 +350,15 @@ function StatCard({
   icon: Icon,
   accent,
   href,
+  isTextValue,
 }: {
   label: string;
-  value: number;
+  value: number | string;
   helper: string;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   accent?: boolean;
   href?: string;
+  isTextValue?: boolean;
 }) {
   const content = (
     <div
@@ -214,9 +376,9 @@ function StatCard({
         />
       </div>
       <p
-        className={`mt-3 font-display text-3xl font-medium tracking-tight tabular md:text-4xl ${
-          accent ? "text-site-accent" : "text-foreground"
-        }`}
+        className={`mt-3 font-display font-medium tracking-tight tabular ${
+          isTextValue ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
+        } ${accent ? "text-site-accent" : "text-foreground"}`}
       >
         {value}
       </p>
