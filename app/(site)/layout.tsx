@@ -13,6 +13,7 @@ const defaults: SiteSettings = {
   contact: { email: "hello@example.com", github: "https://github.com/kiri" },
   seo: { siteTitle: "Kiri · Notes", siteDescription: "" },
   about: { heroTitle: "", bodyHtml: "" },
+  theme: { accent: "#9a2e20", accentDark: "#d8715e" },
 };
 
 export default async function SiteLayout({ children }: { children: ReactNode }) {

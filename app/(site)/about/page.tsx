@@ -44,6 +44,7 @@ const defaults: SiteSettings = {
     heroTitle: "Hello, I'm Kiri.",
     bodyHtml: "",
   },
+  theme: { accent: "#9a2e20", accentDark: "#d8715e" },
 };
 
 function displayGithubHandle(url: string): string {

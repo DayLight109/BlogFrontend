@@ -25,6 +25,8 @@ type FormState = {
   "seo.site_description": string;
   "about.hero_title": string;
   "about.body_md": string;
+  "theme.accent": string;
+  "theme.accent_dark": string;
 };
 
 const empty: FormState = {
@@ -37,6 +39,8 @@ const empty: FormState = {
   "seo.site_description": "",
   "about.hero_title": "",
   "about.body_md": "",
+  "theme.accent": "#9a2e20",
+  "theme.accent_dark": "#d8715e",
 };
 
 function fromAdmin(s: AdminSiteSettings): FormState {
@@ -50,8 +54,19 @@ function fromAdmin(s: AdminSiteSettings): FormState {
     "seo.site_description": s.seo.siteDescription,
     "about.hero_title": s.about.heroTitle,
     "about.body_md": s.aboutBodyMd,
+    "theme.accent": s.theme?.accent || "#9a2e20",
+    "theme.accent_dark": s.theme?.accentDark || "#d8715e",
   };
 }
+
+const ACCENT_PRESETS = [
+  { name: "Spine red", light: "#9a2e20", dark: "#d8715e" },
+  { name: "Ink blue", light: "#2f4b73", dark: "#7ea7d8" },
+  { name: "Forest", light: "#2d6046", dark: "#7ec29b" },
+  { name: "Amber", light: "#a0651e", dark: "#e0a968" },
+  { name: "Plum", light: "#6b3168", dark: "#c48dc0" },
+  { name: "Graphite", light: "#3a3a3a", dark: "#b8b8b8" },
+];
 
 export default function AdminSettingsPage() {
   const token = useAuth((s) => s.accessToken);
