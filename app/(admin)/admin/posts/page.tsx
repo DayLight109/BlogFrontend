@@ -28,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type StatusFilter = "" | "published" | "draft" | "archived";
+type StatusFilter = "" | "published" | "scheduled" | "draft" | "archived";
 
 export default function AdminPostsPage() {
   const token = useAuth((s) => s.accessToken);
@@ -46,7 +46,7 @@ export default function AdminPostsPage() {
   const del = useMutation({
     mutationFn: (id: number) => api.adminDeletePost(token!, id),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Deleted · 前台已更新");
       qc.invalidateQueries({ queryKey: ["admin", "posts"] });
     },
@@ -110,6 +110,7 @@ export default function AdminPostsPage() {
             [
               { v: "", label: "All" },
               { v: "published", label: "Published" },
+              { v: "scheduled", label: "Scheduled" },
               { v: "draft", label: "Draft" },
               { v: "archived", label: "Archived" },
             ] as { v: StatusFilter; label: string }[]

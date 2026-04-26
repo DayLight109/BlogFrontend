@@ -1,5 +1,6 @@
 import type {
   AdminSiteSettings,
+  AuditLogEntry,
   Comment,
   LoginResponse,
   PaginatedResponse,
@@ -79,6 +80,10 @@ export const api = {
       authorWebsite?: string;
       content: string;
       parentId?: number;
+      /** honeypot — must be empty */
+      url?: string;
+      /** form mount epoch ms — used by anti-bot timing check */
+      ts?: number;
     },
   ) {
     return request<Comment>(`/posts/${encodeURIComponent(slug)}/comments`, {
@@ -169,7 +174,7 @@ export const api = {
     return request<Post>(`/admin/posts/${id}`, { token, cache: "no-store" });
   },
 
-  adminCreatePost(token: string, body: Partial<Post> & { publish?: boolean; content: string }) {
+  adminCreatePost(token: string, body: Partial<Post> & { publish?: boolean; content: string; publishAt?: string }) {
     return request<Post>(`/admin/posts`, {
       token,
       method: "POST",
@@ -183,11 +188,12 @@ export const api = {
         tags: body.tags ?? [],
         pinned: body.pinned,
         publish: body.publish ?? false,
+        publishAt: body.publishAt,
       }),
     });
   },
 
-  adminUpdatePost(token: string, id: number, body: Partial<Post> & { publish?: boolean; content: string }) {
+  adminUpdatePost(token: string, id: number, body: Partial<Post> & { publish?: boolean; content: string; publishAt?: string }) {
     return request<Post>(`/admin/posts/${id}`, {
       token,
       method: "PUT",
@@ -201,6 +207,7 @@ export const api = {
         tags: body.tags ?? [],
         pinned: body.pinned,
         publish: body.publish ?? false,
+        publishAt: body.publishAt,
       }),
     });
   },
@@ -311,5 +318,65 @@ export const api = {
       throw new ApiError(res.status, body || res.statusText);
     }
     return res.json();
+  },
+
+  // --- Admin Trash (soft-delete recycle bin) ---
+  adminListTrashPosts(token: string, params: { page?: number; size?: number } = {}) {
+    const q = new URLSearchParams();
+    if (params.page) q.set("page", String(params.page));
+    if (params.size) q.set("size", String(params.size));
+    return request<PaginatedResponse<Post>>(
+      `/admin/trash/posts${q.toString() ? `?${q}` : ""}`,
+      { token, cache: "no-store" },
+    );
+  },
+
+  adminRestorePost(token: string, id: number) {
+    return request<{ ok: boolean }>(`/admin/trash/posts/${id}/restore`, {
+      token,
+      method: "POST",
+    });
+  },
+
+  adminPurgePost(token: string, id: number) {
+    return request<{ ok: boolean }>(`/admin/trash/posts/${id}`, {
+      token,
+      method: "DELETE",
+    });
+  },
+
+  adminListTrashComments(token: string, params: { page?: number; size?: number } = {}) {
+    const q = new URLSearchParams();
+    if (params.page) q.set("page", String(params.page));
+    if (params.size) q.set("size", String(params.size));
+    return request<PaginatedResponse<Comment>>(
+      `/admin/trash/comments${q.toString() ? `?${q}` : ""}`,
+      { token, cache: "no-store" },
+    );
+  },
+
+  adminRestoreComment(token: string, id: number) {
+    return request<{ ok: boolean }>(`/admin/trash/comments/${id}/restore`, {
+      token,
+      method: "POST",
+    });
+  },
+
+  adminPurgeComment(token: string, id: number) {
+    return request<{ ok: boolean }>(`/admin/trash/comments/${id}`, {
+      token,
+      method: "DELETE",
+    });
+  },
+
+  // --- Admin Audit ---
+  adminListAudit(token: string, params: { page?: number; size?: number } = {}) {
+    const q = new URLSearchParams();
+    if (params.page) q.set("page", String(params.page));
+    if (params.size) q.set("size", String(params.size));
+    return request<PaginatedResponse<AuditLogEntry>>(
+      `/admin/audit${q.toString() ? `?${q}` : ""}`,
+      { token, cache: "no-store" },
+    );
   },
 };

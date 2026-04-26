@@ -16,6 +16,10 @@ function escape(s: string) {
     .replace(/'/g, "&apos;");
 }
 
+function cdata(s: string) {
+  return s.replaceAll("]]>", "]]]]><![CDATA[>");
+}
+
 export async function GET() {
   let items: Awaited<ReturnType<typeof api.listPosts>>["items"] = [];
   try {
@@ -39,7 +43,7 @@ export async function GET() {
     <updated>${updated}</updated>
     <author><name>${escape(AUTHOR)}</name></author>
     ${p.tags?.map((t) => `<category term="${escape(t)}"/>`).join("\n    ") ?? ""}
-    <summary type="html"><![CDATA[${summary}]]></summary>
+    <summary type="html"><![CDATA[${cdata(summary)}]]></summary>
   </entry>`;
     })
     .join("\n");

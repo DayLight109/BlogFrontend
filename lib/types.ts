@@ -23,7 +23,7 @@ export interface Post {
   contentMd: string;
   contentHtml: string;
   coverUrl?: string;
-  status: "draft" | "published" | "archived";
+  status: "draft" | "scheduled" | "published" | "archived";
   tags: string[] | null;
   pinned?: boolean;
   authorId: number;
@@ -54,21 +54,44 @@ export interface LoginResponse {
   user: User;
 }
 
+export interface EditorialBlock {
+  heroTitle: string;
+  bodyHtml: string;
+}
+
 export interface SiteSettings {
   brand: { name: string; tagline: string };
   footer: { text: string };
   contact: { email: string; github: string };
   seo: { siteTitle: string; siteDescription: string };
-  about: { heroTitle: string; bodyHtml: string };
+  about: EditorialBlock;
+  now: EditorialBlock;
+  uses: EditorialBlock;
+  colophon: EditorialBlock;
   theme: { accent: string; accentDark: string };
 }
 
 export interface AdminSiteSettings extends SiteSettings {
   aboutBodyMd: string;
+  nowBodyMd: string;
+  usesBodyMd: string;
+  colophonBodyMd: string;
 }
 
 export interface UploadResponse {
   url: string;
   name: string;
   size: number;
+}
+
+export interface AuditLogEntry {
+  id: number;
+  userId: number;
+  username: string;
+  method: string;
+  path: string;
+  status: number;
+  ip?: string;
+  userAgent?: string;
+  createdAt: string;
 }

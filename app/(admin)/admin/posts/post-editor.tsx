@@ -41,14 +41,24 @@ export function PostEditor({ postId }: { postId?: number }) {
     tagsStr: "",
     pinned: false,
     status: "draft" as Post["status"],
+    publishAt: "", // datetime-local 字段;留空 = 立即发布
   });
 
   useEffect(() => {
     if (!postId || !token) return;
-    setLoading(true);
     api
       .adminGetPost(token, postId)
       .then((p) => {
+        // 只有 scheduled 文章需要把 publishedAt 反填回 datetime-local 输入框
+        let publishAt = "";
+        if (p.status === "scheduled" && p.publishedAt) {
+          // datetime-local 需要 "YYYY-MM-DDTHH:mm",且本地时区
+          const d = new Date(p.publishedAt);
+          const pad = (n: number) => String(n).padStart(2, "0");
+          publishAt = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
+            d.getDate(),
+          )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
         setForm({
           title: p.title,
           slug: p.slug,
@@ -58,6 +68,7 @@ export function PostEditor({ postId }: { postId?: number }) {
           tagsStr: (p.tags ?? []).join(", "),
           pinned: !!p.pinned,
           status: p.status,
+          publishAt,
         });
       })
       .catch((e) => toast.error(e instanceof Error ? e.message : "加载失败"))
@@ -74,6 +85,12 @@ export function PostEditor({ postId }: { postId?: number }) {
       .split(",")
       .map((t) => t.trim())
       .filter(Boolean);
+    // datetime-local 没时区,直接 new Date 当作本地时间,再转 ISO/UTC 给后端
+    let publishAt: string | undefined;
+    if (form.publishAt) {
+      const d = new Date(form.publishAt);
+      if (!isNaN(d.getTime())) publishAt = d.toISOString();
+    }
     const body = {
       title: form.title.trim(),
       slug: form.slug.trim(),
@@ -84,16 +101,17 @@ export function PostEditor({ postId }: { postId?: number }) {
       pinned: form.pinned,
       status: form.status,
       publish,
+      publishAt,
     };
     setSaving(true);
     try {
       if (postId) {
         await api.adminUpdatePost(token, postId, body);
-        await revalidateSite(["posts"]);
+        await revalidateSite(["posts"], token);
         toast.success("保存成功 · 前台已更新");
       } else {
         const created = await api.adminCreatePost(token, body);
-        await revalidateSite(["posts"]);
+        await revalidateSite(["posts"], token);
         toast.success("创建成功");
         router.push(`/admin/posts/${created.id}`);
         return;
@@ -255,6 +273,23 @@ export function PostEditor({ postId }: { postId?: number }) {
             <span>置顶到首页</span>
           </Label>
         </div>
+      </div>
+
+      {/* 计划发布:留空 = 立即发布;填未来时间 + 点"发布"会进入 scheduled 状态 */}
+      <div className="space-y-1.5">
+        <Label htmlFor="publishAt">计划发布时间(留空 = 立即发布)</Label>
+        <Input
+          id="publishAt"
+          type="datetime-local"
+          value={form.publishAt}
+          onChange={(e) => setForm({ ...form, publishAt: e.target.value })}
+          className="max-w-xs"
+        />
+        {form.publishAt && (
+          <p className="text-xs text-muted-foreground">
+            点&ldquo;发布&rdquo;会把状态置为 <code>scheduled</code>,后端每分钟检查一次,到点自动转 <code>published</code>。
+          </p>
+        )}
       </div>
 
       <div className="space-y-1.5">

@@ -44,6 +44,9 @@ const defaults: SiteSettings = {
     heroTitle: "Hello, I'm Kiri.",
     bodyHtml: "",
   },
+  now: { heroTitle: "", bodyHtml: "" },
+  uses: { heroTitle: "", bodyHtml: "" },
+  colophon: { heroTitle: "", bodyHtml: "" },
   theme: { accent: "#9a2e20", accentDark: "#d8715e" },
 };
 
@@ -56,6 +59,19 @@ function displayGithubHandle(url: string): string {
   }
 }
 
+function safeHttpUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    return u.protocol === "http:" || u.protocol === "https:" ? u.toString() : "";
+  } catch {
+    return "";
+  }
+}
+
+function safeEmail(email: string): string {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : "";
+}
+
 export default async function AboutPage() {
   let settings: SiteSettings = defaults;
   try {
@@ -66,8 +82,8 @@ export default async function AboutPage() {
 
   const heroTitle = settings.about.heroTitle || defaults.about.heroTitle;
   const bodyHtml = settings.about.bodyHtml;
-  const email = settings.contact.email;
-  const github = settings.contact.github;
+  const email = safeEmail(settings.contact.email);
+  const github = safeHttpUrl(settings.contact.github);
 
   return (
     <div className="mx-auto max-w-[48rem] px-6 md:px-10">

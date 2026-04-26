@@ -22,6 +22,9 @@ export function ThemeToggle() {
     const isDark =
       stored === "dark" ||
       (!stored && document.documentElement.classList.contains("dark"));
+    // Read the pre-hydration class/localStorage state once so the control
+    // matches the theme bootstrap script.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(isDark ? "dark" : "light");
   }, []);
 

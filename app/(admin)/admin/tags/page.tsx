@@ -41,7 +41,7 @@ export default function AdminTagsPage() {
     mutationFn: ({ from, to }: { from: string; to: string }) =>
       api.adminRenameTag(token!, from, to),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Renamed · 前台已更新");
       qc.invalidateQueries({ queryKey: ["tags"] });
       setEditing(null);
@@ -53,7 +53,7 @@ export default function AdminTagsPage() {
   const del = useMutation({
     mutationFn: (name: string) => api.adminDeleteTag(token!, name),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Deleted · 前台已更新");
       qc.invalidateQueries({ queryKey: ["tags"] });
     },
@@ -65,7 +65,7 @@ export default function AdminTagsPage() {
     mutationFn: ({ from, to }: { from: string[]; to: string }) =>
       api.adminMergeTags(token!, from, to),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Merged · 前台已更新");
       qc.invalidateQueries({ queryKey: ["tags"] });
       setMergeOpen(false);

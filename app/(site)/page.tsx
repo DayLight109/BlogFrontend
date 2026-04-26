@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Pin } from "lucide-react";
 
 import { api } from "@/lib/api";

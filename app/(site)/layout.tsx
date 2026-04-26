@@ -13,6 +13,9 @@ const defaults: SiteSettings = {
   contact: { email: "hello@example.com", github: "https://github.com/kiri" },
   seo: { siteTitle: "Kiri · Notes", siteDescription: "" },
   about: { heroTitle: "", bodyHtml: "" },
+  now: { heroTitle: "", bodyHtml: "" },
+  uses: { heroTitle: "", bodyHtml: "" },
+  colophon: { heroTitle: "", bodyHtml: "" },
   theme: { accent: "#9a2e20", accentDark: "#d8715e" },
 };
 
@@ -51,6 +54,9 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
             <NavLink href="/tags" className="hidden md:inline-block">
               Tags
             </NavLink>
+            <NavLink href="/now" className="hidden md:inline-block">
+              Now
+            </NavLink>
             <NavLink href="/about" className="hidden sm:inline-block">
               About
             </NavLink>
@@ -86,7 +92,21 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
             <span className="opacity-40" aria-hidden>
               ·
             </span>
-            <span>Built with Next.js &amp; Go</span>
+            <Link
+              href="/uses"
+              className="transition-colors hover:text-site-accent"
+            >
+              Uses
+            </Link>
+            <span className="opacity-40" aria-hidden>
+              ·
+            </span>
+            <Link
+              href="/colophon"
+              className="transition-colors hover:text-site-accent"
+            >
+              Colophon
+            </Link>
             <span className="opacity-40" aria-hidden>
               ·
             </span>

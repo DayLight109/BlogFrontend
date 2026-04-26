@@ -25,6 +25,12 @@ type FormState = {
   "seo.site_description": string;
   "about.hero_title": string;
   "about.body_md": string;
+  "now.hero_title": string;
+  "now.body_md": string;
+  "uses.hero_title": string;
+  "uses.body_md": string;
+  "colophon.hero_title": string;
+  "colophon.body_md": string;
   "theme.accent": string;
   "theme.accent_dark": string;
 };
@@ -39,6 +45,12 @@ const empty: FormState = {
   "seo.site_description": "",
   "about.hero_title": "",
   "about.body_md": "",
+  "now.hero_title": "",
+  "now.body_md": "",
+  "uses.hero_title": "",
+  "uses.body_md": "",
+  "colophon.hero_title": "",
+  "colophon.body_md": "",
   "theme.accent": "#9a2e20",
   "theme.accent_dark": "#d8715e",
 };
@@ -54,6 +66,12 @@ function fromAdmin(s: AdminSiteSettings): FormState {
     "seo.site_description": s.seo.siteDescription,
     "about.hero_title": s.about.heroTitle,
     "about.body_md": s.aboutBodyMd,
+    "now.hero_title": s.now?.heroTitle ?? "",
+    "now.body_md": s.nowBodyMd ?? "",
+    "uses.hero_title": s.uses?.heroTitle ?? "",
+    "uses.body_md": s.usesBodyMd ?? "",
+    "colophon.hero_title": s.colophon?.heroTitle ?? "",
+    "colophon.body_md": s.colophonBodyMd ?? "",
     "theme.accent": s.theme?.accent || "#9a2e20",
     "theme.accent_dark": s.theme?.accentDark || "#d8715e",
   };
@@ -80,6 +98,8 @@ export default function AdminSettingsPage() {
   });
 
   useEffect(() => {
+    // Sync the editable draft once the server settings arrive.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (data) setForm(fromAdmin(data));
   }, [data]);
 
@@ -87,7 +107,7 @@ export default function AdminSettingsPage() {
     mutationFn: (payload: Partial<FormState>) =>
       api.adminUpdateSettings(token!, payload as Record<string, string>),
     onSuccess: async () => {
-      await revalidateSite(["settings", "posts"]);
+      await revalidateSite(["settings", "posts"], token!);
       toast.success("Saved · 前台已更新");
       qc.invalidateQueries({ queryKey: ["admin", "settings"] });
     },
@@ -216,10 +236,67 @@ export default function AdminSettingsPage() {
         </Field>
       </Section>
 
+      {/* Now */}
+      <Section title="Now" caption="此刻 · /now 页">
+        <Field label="Hero title" id="now.hero_title">
+          <Input
+            id="now.hero_title"
+            value={form["now.hero_title"]}
+            onChange={(e) => set("now.hero_title", e.target.value)}
+            maxLength={128}
+          />
+        </Field>
+        <Field label="Body (Markdown)" id="now.body_md">
+          <MarkdownEditor
+            value={form["now.body_md"]}
+            onChange={(v) => set("now.body_md", v)}
+            height={420}
+          />
+        </Field>
+      </Section>
+
+      {/* Uses */}
+      <Section title="Uses" caption="器物 · /uses 页">
+        <Field label="Hero title" id="uses.hero_title">
+          <Input
+            id="uses.hero_title"
+            value={form["uses.hero_title"]}
+            onChange={(e) => set("uses.hero_title", e.target.value)}
+            maxLength={128}
+          />
+        </Field>
+        <Field label="Body (Markdown)" id="uses.body_md">
+          <MarkdownEditor
+            value={form["uses.body_md"]}
+            onChange={(v) => set("uses.body_md", v)}
+            height={420}
+          />
+        </Field>
+      </Section>
+
+      {/* Colophon */}
+      <Section title="Colophon" caption="版记 · /colophon 页">
+        <Field label="Hero title" id="colophon.hero_title">
+          <Input
+            id="colophon.hero_title"
+            value={form["colophon.hero_title"]}
+            onChange={(e) => set("colophon.hero_title", e.target.value)}
+            maxLength={128}
+          />
+        </Field>
+        <Field label="Body (Markdown)" id="colophon.body_md">
+          <MarkdownEditor
+            value={form["colophon.body_md"]}
+            onChange={(v) => set("colophon.body_md", v)}
+            height={420}
+          />
+        </Field>
+      </Section>
+
       {/* Theme */}
       <Section title="Theme" caption="配色">
         <p className="text-xs text-muted-foreground">
-          Accent 色会出现在链接、active 导航、"in between" 这类强调文字上。换一下就能立刻看到效果。
+          Accent 色会出现在链接、active 导航、&quot;in between&quot; 这类强调文字上。换一下就能立刻看到效果。
         </p>
 
         <div className="grid gap-5 md:grid-cols-2">

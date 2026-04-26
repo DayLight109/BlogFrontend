@@ -75,7 +75,7 @@ export default function AdminDashboard() {
     ? Math.max(
         0,
         Math.floor(
-          (Date.now() - new Date(lastPublished.publishedAt!).getTime()) /
+          (postsAll.dataUpdatedAt - new Date(lastPublished.publishedAt!).getTime()) /
             (1000 * 60 * 60 * 24),
         ),
       )

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { CornerDownRight, X } from "lucide-react";
 
@@ -51,9 +51,13 @@ export function CommentsSection({ slug }: { slug: string }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [content, setContent] = useState("");
+  const [hp, setHp] = useState(""); // honeypot — must stay empty for real users
   const [replyTo, setReplyTo] = useState<{ id: number; name: string } | null>(
     null,
   );
+  // 表单挂载时间戳:用于服务端节流校验。bot 直接 POST 不会有这个值,
+  // 自动表单填充器虽然能填字段但通常瞬间提交,3s 阈值能筛掉大部分。
+  const formMountedAt = useMemo(() => Date.now(), []);
 
   const { data, isLoading } = useQuery({
     queryKey: ["comments", slug],
@@ -67,6 +71,8 @@ export function CommentsSection({ slug }: { slug: string }) {
         authorEmail: email.trim() || undefined,
         content: content.trim(),
         parentId: replyTo?.id,
+        url: hp,
+        ts: formMountedAt,
       }),
     onSuccess: () => {
       setContent("");
@@ -206,6 +212,24 @@ export function CommentsSection({ slug }: { slug: string }) {
               className="w-full resize-y border-0 bg-transparent py-3 font-reading text-base leading-[1.78] text-foreground placeholder:text-muted-foreground/35 outline-none focus:border-0"
             />
           </FieldLine>
+
+          {/* Honeypot:对人类视觉/键盘/屏幕阅读器都不可见,bot 才会填上。 */}
+          <div
+            aria-hidden="true"
+            className="absolute -z-10 h-0 w-0 overflow-hidden opacity-0"
+          >
+            <label>
+              Website
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                name="url"
+                value={hp}
+                onChange={(e) => setHp(e.target.value)}
+              />
+            </label>
+          </div>
 
           <div className="flex flex-col items-start gap-4 border-t border-site-rule pt-5 md:flex-row md:items-center md:justify-between">
             <p className="caps text-muted-foreground">

@@ -9,6 +9,8 @@ import {
   MessagesSquare,
   Tag as TagIcon,
   Settings as SettingsIcon,
+  Trash2,
+  History,
   LogOut,
   ExternalLink,
 } from "lucide-react";
@@ -20,15 +22,44 @@ import { Button } from "@/components/ui/button";
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { accessToken, user, clear } = useAuth();
+  const { accessToken, expiresAt, user, setAuth, clear } = useAuth();
 
   const isLogin = pathname === "/admin/login";
 
   useEffect(() => {
-    if (!isLogin && !accessToken) {
-      router.replace("/admin/login");
+    if (isLogin) return;
+
+    let cancelled = false;
+
+    async function refreshAuth() {
+      try {
+        const refreshed = await api.refresh();
+        if (!cancelled) {
+          setAuth(refreshed.accessToken, refreshed.expiresAt, refreshed.user);
+        }
+      } catch {
+        if (!cancelled) {
+          clear();
+          router.replace("/admin/login");
+        }
+      }
     }
-  }, [isLogin, accessToken, router]);
+
+    if (!accessToken) {
+      refreshAuth();
+    } else if (expiresAt !== null) {
+      const delay = Math.max(expiresAt * 1000 - Date.now() - 60_000, 0);
+      const timer = window.setTimeout(refreshAuth, delay);
+      return () => {
+        cancelled = true;
+        window.clearTimeout(timer);
+      };
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isLogin, accessToken, expiresAt, setAuth, clear, router]);
 
   if (isLogin) return <>{children}</>;
   if (!accessToken) return null;
@@ -92,6 +123,18 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               icon={SettingsIcon}
               label="Settings"
               active={pathname.startsWith("/admin/settings")}
+            />
+            <SideNavItem
+              href="/admin/trash"
+              icon={Trash2}
+              label="Trash"
+              active={pathname.startsWith("/admin/trash")}
+            />
+            <SideNavItem
+              href="/admin/audit"
+              icon={History}
+              label="Audit"
+              active={pathname.startsWith("/admin/audit")}
             />
           </ul>
 

@@ -11,6 +11,7 @@ import { Rule } from "@/components/site/rule";
 import { ReadingProgress } from "@/components/site/reading-progress";
 import { TransitionLink } from "@/components/site/transition-link";
 import { CodeBlockEnhancer } from "@/components/site/code-block-enhancer";
+import { JellyText } from "@/components/site/jelly-text";
 import { TableOfContents } from "@/components/site/table-of-contents";
 import { PostNeighbors } from "@/components/site/post-neighbors";
 import { RelatedPosts } from "@/components/site/related-posts";
@@ -184,6 +185,7 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
               dangerouslySetInnerHTML={{ __html: highlightedHtml }}
             />
             <CodeBlockEnhancer scope="#article-body" />
+            <JellyText scope="#article-body" />
           </div>
 
           <TableOfContents headings={toc} />

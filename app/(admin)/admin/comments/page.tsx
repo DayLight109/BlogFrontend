@@ -53,7 +53,7 @@ export default function AdminCommentsPage() {
     mutationFn: ({ id, status }: { id: number; status: Comment["status"] }) =>
       api.adminUpdateCommentStatus(token!, id, status),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Updated · 前台已更新");
       qc.invalidateQueries({ queryKey: ["admin", "comments"] });
     },
@@ -64,7 +64,7 @@ export default function AdminCommentsPage() {
   const del = useMutation({
     mutationFn: (id: number) => api.adminDeleteComment(token!, id),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Deleted · 前台已更新");
       qc.invalidateQueries({ queryKey: ["admin", "comments"] });
     },
@@ -76,7 +76,7 @@ export default function AdminCommentsPage() {
     mutationFn: (args: { postId: number; parentId: number; content: string }) =>
       api.adminReplyComment(token!, args),
     onSuccess: async () => {
-      await revalidateSite(["posts"]);
+      await revalidateSite(["posts"], token!);
       toast.success("Reply posted · 前台已更新");
       qc.invalidateQueries({ queryKey: ["admin", "comments"] });
       setReplyingTo(null);

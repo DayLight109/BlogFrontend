@@ -782,6 +782,232 @@ html[data-theme-transition="true"]::view-transition-new(root) {
 }
 
 /* =========================================================
+   MOTION — jelly text · "Glass droplet"
+   Triple-click any prose block to envelop it in a quivering
+   liquid-glass droplet. The text sits inside a near-transparent
+   bead with a permanent top-bead specular highlight, a slow
+   amoeba-like border-radius morph, parallax 3D nod, and double
+   spring on enter. Click while in jelly state for a soft white
+   caustic dimple from the cursor — no red ripple, no flashbang.
+   Second triple-click toggles back to plain prose.
+
+   The motion mixes four parallel loops on coprime periods —
+   they never resolve to a beat, which is what makes it read as
+   "alive water" instead of "looping animation". Inspired by
+   liquid glass / soft-body work from Codrops, Rauno, and the
+   Apple Vision OS material vocabulary.
+   ========================================================= */
+@property --jx  { syntax: "<number>"; inherits: false; initial-value: 1; }
+@property --jy  { syntax: "<number>"; inherits: false; initial-value: 1; }
+@property --jk  { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
+@property --jr  { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
+@property --jrx { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
+
+.is-jelly {
+  position: relative;
+  isolation: isolate;
+  display: block;
+
+  /* The bead has actual body — padding lifts the text into the drop.
+     margin-inline cancels horizontal width change so the column edge
+     stays put; vertical growth is intentional, the drop bulges off-page. */
+  padding: 0.55em 0.95em;
+  margin-inline: -0.95em;
+
+  /* Initial blob radius. Animated by jelly-morph below. */
+  border-radius: 38% 62% 65% 35% / 42% 38% 62% 58%;
+
+  /* Body — almost clear, warmth pooled at the bottom from refraction. */
+  background:
+    linear-gradient(
+      178deg,
+      hsl(0 0% 100% / 0.34) 0%,
+      hsl(0 0% 100% / 0.08) 18%,
+      hsl(0 0% 100% / 0) 42%,
+      color-mix(in oklab, var(--site-accent) 7%, transparent) 72%,
+      color-mix(in oklab, var(--site-accent) 16%, transparent) 100%
+    );
+
+  /* Refractive blur on what's behind the drop. */
+  -webkit-backdrop-filter: blur(2.4px) saturate(1.35) contrast(1.04);
+  backdrop-filter: blur(2.4px) saturate(1.35) contrast(1.04);
+
+  /* Glass body — built up from many tiny shadows that read as a
+     single material rather than a stack of layers. */
+  box-shadow:
+    inset 0 1.5px 0 hsl(0 0% 100% / 0.7),
+    inset 0 8px 18px -10px hsl(0 0% 100% / 0.55),
+    inset 0 -10px 22px -14px color-mix(in oklab, var(--site-accent) 38%, transparent),
+    inset 0 -1px 0 hsl(0 0% 100% / 0.18),
+    inset 6px 0 12px -10px hsl(0 0% 100% / 0.3),
+    inset -6px 0 12px -10px color-mix(in oklab, var(--site-accent) 22%, transparent),
+    0 1px 1px hsl(0 0% 0% / 0.03),
+    0 8px 18px -6px color-mix(in oklab, var(--site-accent) 20%, transparent),
+    0 22px 50px -14px color-mix(in oklab, var(--site-accent) 26%, transparent),
+    0 32px 68px -22px hsl(0 0% 0% / 0.08);
+
+  /* Text reads almost normal, just a hint warmer.
+     No more chunky red drop-shadow stack — that read as "ugly". */
+  color: color-mix(in oklab, var(--foreground) 92%, var(--site-accent));
+  text-shadow:
+    0 0.5px 0 hsl(0 0% 100% / 0.34),
+    0 1px 2px color-mix(in oklab, var(--site-accent) 22%, transparent);
+
+  /* Composed transform — variables ride 4 independent animations below. */
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform:
+    perspective(900px)
+    rotateX(var(--jrx))
+    rotate(var(--jr))
+    scale(var(--jx), var(--jy))
+    skewX(var(--jk));
+
+  animation:
+    jelly-enter 0.85s cubic-bezier(0.18, 1.45, 0.4, 1) both,
+    jelly-breathe 3.6s cubic-bezier(0.4, 0, 0.6, 1) 0.85s infinite,
+    jelly-tilt 5.2s cubic-bezier(0.45, 0, 0.55, 1) 0.85s infinite,
+    jelly-morph 9s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  transition:
+    background 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 420ms ease,
+    text-shadow 420ms ease,
+    padding 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-inline 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-jelly.is-poked {
+  animation:
+    jelly-enter 0.85s cubic-bezier(0.18, 1.45, 0.4, 1) both,
+    jelly-breathe 3.6s cubic-bezier(0.4, 0, 0.6, 1) 0.85s infinite,
+    jelly-tilt 5.2s cubic-bezier(0.45, 0, 0.55, 1) 0.85s infinite,
+    jelly-morph 9s cubic-bezier(0.4, 0, 0.6, 1) infinite,
+    jelly-poke 0.75s cubic-bezier(0.16, 1.18, 0.3, 1);
+}
+
+/* Click feedback — a SOFT WHITE caustic, soft-light blended with
+   the bead. No red, no expanding ring. Reads as "the surface
+   just bowed inward where you pressed". */
+.is-jelly::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--poke-x, 50%) var(--poke-y, 50%),
+    hsl(0 0% 100% / 0.55) 0%,
+    hsl(0 0% 100% / 0.1) 18%,
+    transparent 38%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0;
+}
+
+.is-jelly.is-poked::before {
+  animation: jelly-press 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Permanent top-bead highlight — what makes a glass drop look
+   like a glass drop. Stays put while the body morphs around it. */
+.is-jelly::after {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: 14%;
+  right: 14%;
+  height: 26%;
+  border-radius: 100% / 60%;
+  background: radial-gradient(
+    ellipse 60% 80% at 38% 30%,
+    hsl(0 0% 100% / 0.55) 0%,
+    hsl(0 0% 100% / 0.18) 38%,
+    transparent 75%
+  );
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: lighten;
+}
+
+/* Dark mode — the warm tint shifts to a slightly cooler, brighter
+   accent so the bead glows on dark paper instead of disappearing. */
+.dark .is-jelly {
+  background:
+    linear-gradient(
+      178deg,
+      hsl(0 0% 100% / 0.18) 0%,
+      hsl(0 0% 100% / 0.04) 22%,
+      hsl(0 0% 100% / 0) 48%,
+      color-mix(in oklab, var(--site-accent) 12%, transparent) 75%,
+      color-mix(in oklab, var(--site-accent) 24%, transparent) 100%
+    );
+}
+.dark .is-jelly::after {
+  background: radial-gradient(
+    ellipse 60% 80% at 38% 30%,
+    hsl(0 0% 100% / 0.4) 0%,
+    hsl(0 0% 100% / 0.12) 38%,
+    transparent 75%
+  );
+}
+
+/* Initial drop entry — squashed → spring overshoot → settle. */
+@keyframes jelly-enter {
+  0%   { --jx: 0.84; --jy: 0.84; }
+  38%  { --jx: 1.07; --jy: 1.07; }
+  62%  { --jx: 0.965; --jy: 0.965; }
+  82%  { --jx: 1.014; --jy: 1.014; }
+  100% { --jx: 1;    --jy: 1; }
+}
+
+/* Breathing — surface-tension exhale. ~3.6s, deliberately slow. */
+@keyframes jelly-breathe {
+  0%, 100% { --jx: 1;     --jy: 1; }
+  35%      { --jx: 1.022; --jy: 0.978; }
+  70%      { --jx: 0.985; --jy: 1.015; }
+}
+
+/* 3D tilt — the bead nods toward / away from the viewer. The
+   rotateX is what gives the otherwise-flat box visual volume. */
+@keyframes jelly-tilt {
+  0%, 100% { --jr: 0deg;     --jrx: 0deg;    --jk: 0deg; }
+  28%      { --jr: -0.45deg; --jrx: 1.8deg;  --jk: -0.6deg; }
+  56%      { --jr: 0.32deg;  --jrx: -1.4deg; --jk: 0.4deg; }
+  82%      { --jr: -0.18deg; --jrx: 0.8deg;  --jk: -0.2deg; }
+}
+
+/* Morph — blob radius wanders, never quite the same shape twice.
+   9s is long enough that it's never matched by any other loop. */
+@keyframes jelly-morph {
+  0%, 100% { border-radius: 38% 62% 65% 35% / 42% 38% 62% 58%; }
+  20%      { border-radius: 58% 42% 38% 62% / 32% 58% 42% 68%; }
+  40%      { border-radius: 42% 58% 60% 40% / 60% 42% 58% 40%; }
+  60%      { border-radius: 32% 68% 42% 58% / 48% 38% 62% 52%; }
+  80%      { border-radius: 60% 40% 35% 65% / 38% 60% 40% 62%; }
+}
+
+/* Press — SOFT compression. Smaller amplitude than before and
+   a gentler curve so it doesn't read as "twitchy". */
+@keyframes jelly-poke {
+  0%   { --jx: 1;     --jy: 1;     --jk: 0deg; }
+  20%  { --jx: 1.075; --jy: 0.86;  --jk: -0.9deg; }
+  46%  { --jx: 0.952; --jy: 1.052; --jk: 0.55deg; }
+  70%  { --jx: 1.016; --jy: 0.986; --jk: -0.22deg; }
+  100% { --jx: 1;     --jy: 1;     --jk: 0deg; }
+}
+
+/* Press halo — fades in fast, fades out slow. */
+@keyframes jelly-press {
+  0%   { opacity: 0;   transform: scale(0.42); }
+  18%  { opacity: 1; }
+  100% { opacity: 0;   transform: scale(2.4); }
+}
+
+/* =========================================================
    MOTION — global reduced-motion override
    Anything animated above still has a transition fallback,
    but large transforms and keyframed animations are neutralized.
@@ -800,9 +1026,13 @@ html[data-theme-transition="true"]::view-transition-new(root) {
   .reading-progress,
   .prose-editorial > *,
   .title-hover-underline::after,
-  .field-underline-focus {
+  .field-underline-focus,
+  .is-jelly {
     animation: none !important;
     transform: none !important;
+  }
+  .is-jelly::after {
+    display: none !important;
   }
   ::view-transition-old(root),
   ::view-transition-new(root),
