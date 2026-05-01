@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { CornerDownRight, X } from "lucide-react";
 
@@ -51,13 +51,16 @@ export function CommentsSection({ slug }: { slug: string }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [content, setContent] = useState("");
-  const [hp, setHp] = useState(""); // honeypot — must stay empty for real users
+  const [hp, setHp] = useState(""); // honeypot 鈥?must stay empty for real users
+  const formMountedAt = useRef(0);
   const [replyTo, setReplyTo] = useState<{ id: number; name: string } | null>(
     null,
   );
-  // 表单挂载时间戳:用于服务端节流校验。bot 直接 POST 不会有这个值,
-  // 自动表单填充器虽然能填字段但通常瞬间提交,3s 阈值能筛掉大部分。
-  const formMountedAt = useMemo(() => Date.now(), []);
+  // 琛ㄥ崟鎸傝浇鏃堕棿鎴?鐢ㄤ簬鏈嶅姟绔妭娴佹牎楠屻€俠ot 鐩存帴 POST 涓嶄細鏈夎繖涓€?
+  // 鑷姩琛ㄥ崟濉厖鍣ㄨ櫧鐒惰兘濉瓧娈典絾閫氬父鐬棿鎻愪氦,3s 闃堝€艰兘绛涙帀澶ч儴鍒嗐€?
+  useEffect(() => {
+    formMountedAt.current = Date.now();
+  }, []);
 
   const { data, isLoading } = useQuery({
     queryKey: ["comments", slug],
@@ -72,15 +75,15 @@ export function CommentsSection({ slug }: { slug: string }) {
         content: content.trim(),
         parentId: replyTo?.id,
         url: hp,
-        ts: formMountedAt,
+        ts: formMountedAt.current || Date.now(),
       }),
     onSuccess: () => {
       setContent("");
       setReplyTo(null);
       toast.success(
         replyTo
-          ? "Reply sent — awaiting review."
-          : "Thanks — your letter will appear once reviewed.",
+          ? "Reply sent 鈥?awaiting review."
+          : "Thanks 鈥?your letter will appear once reviewed.",
       );
       qc.invalidateQueries({ queryKey: ["comments", slug] });
     },
@@ -98,7 +101,7 @@ export function CommentsSection({ slug }: { slug: string }) {
         <h2 className="font-display text-3xl font-medium tracking-[-0.015em] md:text-4xl">
           Correspondence
           <span className="font-reading ml-3 italic font-normal text-muted-foreground">
-            · 来信
+            路 鏉ヤ俊
           </span>
         </h2>
         <span className="caps tabular text-muted-foreground">
@@ -120,7 +123,7 @@ export function CommentsSection({ slug }: { slug: string }) {
               No letters yet. Yours could be the first.
             </p>
             <p className="caps mt-2 text-xs text-muted-foreground/70">
-              尚无来信
+              灏氭棤鏉ヤ俊
             </p>
           </div>
         )}
@@ -160,7 +163,7 @@ export function CommentsSection({ slug }: { slug: string }) {
             </span>
           ) : (
             <span className="opacity-60" aria-hidden>
-              · 留言
+              路 鐣欒█
             </span>
           )}
           {replyTo && (
@@ -178,7 +181,7 @@ export function CommentsSection({ slug }: { slug: string }) {
 
         <div className="space-y-8">
           <div className="grid gap-8 md:grid-cols-2">
-            <FieldLine label="Name" subLabel="署名" required>
+            <FieldLine label="Name" subLabel="缃插悕" required>
               <input
                 type="text"
                 value={name}
@@ -189,7 +192,7 @@ export function CommentsSection({ slug }: { slug: string }) {
                 className="w-full border-0 bg-transparent pb-2 pt-1 font-reading text-base text-foreground placeholder:text-muted-foreground/35 outline-none focus:border-0"
               />
             </FieldLine>
-            <FieldLine label="Email" subLabel="邮箱 (private)">
+            <FieldLine label="Email" subLabel="閭 (private)">
               <input
                 type="email"
                 value={email}
@@ -201,7 +204,7 @@ export function CommentsSection({ slug }: { slug: string }) {
             </FieldLine>
           </div>
 
-          <FieldLine label={replyTo ? "Reply" : "Letter"} subLabel="内容" required>
+          <FieldLine label={replyTo ? "Reply" : "Letter"} subLabel="鍐呭" required>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -213,7 +216,7 @@ export function CommentsSection({ slug }: { slug: string }) {
             />
           </FieldLine>
 
-          {/* Honeypot:对人类视觉/键盘/屏幕阅读器都不可见,bot 才会填上。 */}
+          {/* Honeypot:瀵逛汉绫昏瑙?閿洏/灞忓箷闃呰鍣ㄩ兘涓嶅彲瑙?bot 鎵嶄細濉笂銆?*/}
           <div
             aria-hidden="true"
             className="absolute -z-10 h-0 w-0 overflow-hidden opacity-0"
@@ -235,7 +238,7 @@ export function CommentsSection({ slug }: { slug: string }) {
             <p className="caps text-muted-foreground">
               Reviewed before published
               <span className="ml-2 opacity-60" aria-hidden>
-                · 先审后发
+                路 鍏堝鍚庡彂
               </span>
             </p>
 
@@ -253,8 +256,7 @@ export function CommentsSection({ slug }: { slug: string }) {
                     aria-hidden
                     className="transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5"
                   >
-                    →
-                  </span>
+                    鈫?                  </span>
                 </>
               )}
             </MagneticButton>

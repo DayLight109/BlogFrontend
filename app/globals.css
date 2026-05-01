@@ -780,6 +780,124 @@ html[data-theme-transition="true"]::view-transition-new(root) {
   --mag-y: 0;
   transform: none;
 }
+/* =========================================================
+   Chat Markdown
+   Compact, readable rendering for AI replies in /chat.
+   ========================================================= */
+.chat-markdown {
+  font-family: var(--font-sans);
+  font-size: 0.96rem;
+  line-height: 1.72;
+  color: var(--foreground);
+}
+.chat-markdown > *:first-child { margin-top: 0; }
+.chat-markdown > *:last-child { margin-bottom: 0; }
+.chat-markdown p { margin: 0.78em 0; }
+.chat-markdown h1,
+.chat-markdown h2,
+.chat-markdown h3,
+.chat-markdown h4 {
+  margin: 1.25em 0 0.45em;
+  font-family: var(--font-display);
+  font-weight: 550;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.chat-markdown h1 { font-size: 1.45rem; }
+.chat-markdown h2 { font-size: 1.25rem; }
+.chat-markdown h3 { font-size: 1.08rem; }
+.chat-markdown ul,
+.chat-markdown ol {
+  margin: 0.72em 0;
+  padding-left: 1.35rem;
+}
+.chat-markdown ul { list-style: disc; }
+.chat-markdown ol { list-style: decimal; }
+.chat-markdown li {
+  margin: 0.38em 0;
+  padding-left: 0.12rem;
+}
+.chat-markdown li::marker {
+  color: var(--site-accent);
+  font-weight: 650;
+}
+.chat-markdown li > p { margin: 0.3em 0; }
+.chat-markdown strong {
+  font-weight: 650;
+  color: var(--foreground);
+}
+.chat-markdown em { color: color-mix(in oklab, var(--foreground) 82%, var(--site-accent)); }
+.chat-markdown a {
+  color: var(--site-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.chat-markdown blockquote {
+  margin: 1em 0;
+  border-left: 2px solid var(--site-accent);
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-reading);
+  font-style: italic;
+}
+.chat-markdown code {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--site-paper-soft);
+  padding: 0.12em 0.36em;
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+.chat-markdown pre {
+  margin: 1rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--site-accent);
+  border-radius: 6px;
+  background: var(--site-paper-soft);
+  padding: 0.95rem 1rem;
+}
+.chat-markdown pre code {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+.chat-markdown .chat-table-wrap {
+  margin: 1rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.chat-markdown table {
+  width: 100%;
+  min-width: 28rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.chat-markdown th,
+.chat-markdown td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.chat-markdown th {
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+}
+.chat-markdown tr:last-child td { border-bottom: 0; }
+.chat-markdown hr {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid var(--site-rule);
+}
 
 /* =========================================================
    MOTION — jelly text · "Glass droplet"

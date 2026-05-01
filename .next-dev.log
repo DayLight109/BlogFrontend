@@ -1,0 +1,799 @@
+
+> web@0.1.0 dev C:\Users\Lilce\Desktop\个人博客系统\web
+> next dev "--hostname" "127.0.0.1" "--port" "3000"
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env.local
+✓ Ready in 320ms
+
+ GET /chat 200 in 447ms (next.js: 175ms, application-code: 272ms)
+ GET /archive 200 in 65ms (next.js: 23ms, application-code: 42ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_0y9hd5u._.js:2431:13)
+ GET /chat 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /chat 200 in 49ms (next.js: 2ms, application-code: 47ms)
+ GET /chat 200 in 101ms (next.js: 4ms, application-code: 97ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9449:40)
+    at renderRootSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/chat" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="(site)/cha...">
+        <SegmentTrieNode>
+        <ChatPage>
+          <ChatInterface>
+            <div className="min-h-[cal...">
+              <section className="mx-auto gr...">
+                <aside>
+                <div className="min-w-0 ov...">
+                  <header>
+                  <main className="relative f...">
+                    <div>
+                    <div className="flex-1 ove...">
+                      <section>
+                      <div className="mx-auto ma...">
+                        <article className="group flex...">
+                          <Avatar>
+                          <div className="max-w-[min...">
+                            <div>
+                            <div className="mt-2 flex ...">
+                              <span className="tabular">
++                               12:30 AM
+-                               12:27 AM
+                              ...
+                        ...
+                    ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3372:23)
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64)
+    at span (<anonymous>)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1210:390)
+    at Array.map (<anonymous>)
+    at ChatInterface (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1162:58)
+    at ChatPage (app\(site)\chat\page.tsx:11:10)
+   9 |
+  10 | export default function ChatPage() {
+> 11 |   return <ChatInterface />;
+     |          ^
+  12 | }
+  13 |
+ GET /chat 200 in 76ms (next.js: 4ms, application-code: 72ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9449:40)
+    at renderRootSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/chat" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="(site)/cha...">
+        <SegmentTrieNode>
+        <ChatPage>
+          <ChatInterface>
+            <div className="min-h-[cal...">
+              <section className="mx-auto gr...">
+                <aside>
+                <div className="min-w-0 ov...">
+                  <header>
+                  <main className="relative f...">
+                    <div>
+                    <div className="flex-1 ove...">
+                      <section>
+                      <div className="mx-auto ma...">
+                        <article className="group flex...">
+                          <Avatar>
+                          <div className="max-w-[min...">
+                            <div>
+                            <div className="mt-2 flex ...">
+                              <span className="tabular">
++                               12:31 AM
+-                               12:27 AM
+                              ...
+                        ...
+                    ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3372:23)
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64)
+    at span (<anonymous>)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1210:390)
+    at Array.map (<anonymous>)
+    at ChatInterface (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1162:58)
+    at ChatPage (app\(site)\chat\page.tsx:11:10)
+   9 |
+  10 | export default function ChatPage() {
+> 11 |   return <ChatInterface />;
+     |          ^
+  12 | }
+  13 |
+ GET /chat 200 in 69ms (next.js: 1653µs, application-code: 68ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9449:40)
+    at renderRootSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/chat" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="(site)/cha...">
+        <SegmentTrieNode>
+        <ChatPage>
+          <ChatInterface>
+            <div className="min-h-[cal...">
+              <section className="mx-auto gr...">
+                <aside>
+                <div className="min-w-0 ov...">
+                  <header>
+                  <main className="relative f...">
+                    <div>
+                    <div className="flex-1 ove...">
+                      <section>
+                      <div className="mx-auto ma...">
+                        <article className="group flex...">
+                          <Avatar>
+                          <div className="max-w-[min...">
+                            <div>
+                            <div className="mt-2 flex ...">
+                              <span className="tabular">
++                               12:31 AM
+-                               12:27 AM
+                              ...
+                        ...
+                    ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3372:23)
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64)
+    at span (<anonymous>)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1210:390)
+    at Array.map (<anonymous>)
+    at ChatInterface (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1162:58)
+    at ChatPage (app\(site)\chat\page.tsx:11:10)
+   9 |
+  10 | export default function ChatPage() {
+> 11 |   return <ChatInterface />;
+     |          ^
+  12 | }
+  13 |
+✓ Compiled in 313ms
+ GET /chat 200 in 104ms (next.js: 47ms, application-code: 57ms)
+ GET /chat 200 in 148ms (next.js: 5ms, application-code: 143ms)
+ GET /chat 200 in 67ms (next.js: 2ms, application-code: 65ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9449:40)
+    at renderRootSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/chat" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="(site)/cha...">
+        <SegmentTrieNode>
+        <ChatPage>
+          <ChatInterface>
+            <div className="min-h-[cal...">
+              <section className="mx-auto gr...">
+                <aside>
+                <div className="min-w-0 ov...">
+                  <header>
+                  <main className="relative f...">
+                    <div>
+                    <div className="flex-1 ove...">
+                      <section>
+                      <div className="mx-auto ma...">
+                        <article className="group flex...">
+                          <Avatar>
+                          <div className="max-w-[min...">
+                            <div>
+                            <div className="mt-2 flex ...">
+                              <span className="tabular">
++                               12:36 AM
+-                               12:34 AM
+                              ...
+                        ...
+                    ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3372:23)
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64)
+    at span (<anonymous>)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1218:390)
+    at Array.map (<anonymous>)
+    at ChatInterface (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1170:58)
+    at ChatPage (app\(site)\chat\page.tsx:11:10)
+   9 |
+  10 | export default function ChatPage() {
+> 11 |   return <ChatInterface />;
+     |          ^
+  12 | }
+  13 |
+ GET /chat 200 in 79ms (next.js: 3ms, application-code: 76ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9449:40)
+    at renderRootSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/chat" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="(site)/cha...">
+        <SegmentTrieNode>
+        <ChatPage>
+          <ChatInterface>
+            <div className="min-h-[cal...">
+              <section className="mx-auto gr...">
+                <aside>
+                <div className="min-w-0 ov...">
+                  <header>
+                  <main className="relative f...">
+                    <div>
+                    <div className="flex-1 ove...">
+                      <section>
+                      <div className="mx-auto ma...">
+                        <article className="group flex...">
+                          <Avatar>
+                          <div className="max-w-[min...">
+                            <div>
+                            <div className="mt-2 flex ...">
+                              <span className="tabular">
++                               12:39 AM
+-                               12:34 AM
+                              ...
+                        ...
+                    ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3372:23)
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64)
+    at span (<anonymous>)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1218:390)
+    at Array.map (<anonymous>)
+    at ChatInterface (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1170:58)
+    at ChatPage (app\(site)\chat\page.tsx:11:10)
+   9 |
+  10 | export default function ChatPage() {
+> 11 |   return <ChatInterface />;
+     |          ^
+  12 | }
+  13 |
+✓ Compiled in 418ms
+ GET /chat 200 in 211ms (next.js: 58ms, application-code: 154ms)
+ GET /chat 200 in 92ms (next.js: 3ms, application-code: 89ms)
+ GET /chat 200 in 59ms (next.js: 3ms, application-code: 56ms)
+ GET /chat 200 in 175ms (next.js: 2ms, application-code: 173ms)
+ GET /archive 200 in 54ms (next.js: 12ms, application-code: 42ms)
+ GET /chat 200 in 19ms (next.js: 1783µs, application-code: 17ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_0y9hd5u._.js:2431:13)
+ GET /chat 200 in 86ms (next.js: 3ms, application-code: 83ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9449:40)
+    at renderRootSync (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/chat" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="(site)/cha...">
+        <SegmentTrieNode>
+        <ChatPage>
+          <ChatInterface>
+            <div className="min-h-[cal...">
+              <section className="mx-auto gr...">
+                <aside>
+                <div className="min-w-0 ov...">
+                  <header>
+                  <main className="relative f...">
+                    <div>
+                    <div className="flex-1 ove...">
+                      <section>
+                      <div className="mx-auto ma...">
+                        <article className="group flex...">
+                          <Avatar>
+                          <div className="max-w-[min...">
+                            <div>
+                            <div className="mt-2 flex ...">
+                              <span className="tabular">
++                               12:42 AM
+-                               12:40 AM
+                              ...
+                        ...
+                    ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:3372:23)
+    at completeWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_react-dom_0d_57jy._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_compiled_0xtotl8._.js:2647:64)
+    at span (<anonymous>)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1234:390)
+    at Array.map (<anonymous>)
+    at ChatInterface (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/_0eg~mrm._.js:1174:58)
+    at ChatPage (app\(site)\chat\page.tsx:11:10)
+   9 |
+  10 | export default function ChatPage() {
+> 11 |   return <ChatInterface />;
+     |          ^
+  12 | }
+  13 |
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+✓ Compiled in 102ms
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13828:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13891:21)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13335:52) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13828:21)
+ GET /chat 500 in 214ms (next.js: 125ms, application-code: 89ms)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13828:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13891:21)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13335:52) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0qhqwhe._.js:13828:21)
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /chat 500 in 31ms (next.js: 9ms, application-code: 22ms)
+ GET /chat 500 in 33ms (next.js: 26ms, application-code: 7ms)
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./app/(site)/chat/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./app/(site)/chat/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2834:28)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2679:13)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2324:17) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2834:28)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2679:13)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2324:17) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /chat 500 in 11ms (next.js: 4ms, application-code: 7ms)
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /chat 500 in 14ms (next.js: 6ms, application-code: 7ms)
+[browser] Uncaught Error: ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./app/(site)/chat/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./app/(site)/chat/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2834:28)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2679:13)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2324:17) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2834:28)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2679:13)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2324:17) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+⨯ ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  [90m1 |[0m [36mimport[0m [36mtype[0m { [33mMetadata[0m } [36mfrom[0m [32m"next"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { [33mChatInterface[0m } [36mfrom[0m [32m"./chat-interface"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mexport[0m [36mconst[0m metadata: [33mMetadata[0m = {
+  [90m6 |[0m   title: [32m"AI Chat"[0m,
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /chat 500 in 10ms (next.js: 5ms, application-code: 5ms)
+[browser] Uncaught Error: ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./app/(site)/chat/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./app/(site)/chat/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2834:28)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2679:13)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2324:17) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+[browser] ./app/(site)/chat/page.tsx:3:1
+Module not found: Can't resolve './chat-interface'
+  1 | import type { Metadata } from "next";
+  2 |
+> 3 | import { ChatInterface } from "./chat-interface";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export const metadata: Metadata = {
+  6 |   title: "AI Chat",
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+    at processMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2834:28)
+    at <unknown> (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2679:13)
+    at WebSocket.handleMessage (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2324:17) (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_client_0mglhn~._.js:2773:21)
+✓ Compiled in 224ms
+ GET /chat 200 in 209ms (next.js: 46ms, application-code: 163ms)
+ GET /chat 200 in 62ms (next.js: 3ms, application-code: 59ms)
+ GET /tags 200 in 70ms (next.js: 29ms, application-code: 41ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior (file://C:/Users/Lilce/Desktop/个人博客系统/web/.next/dev/static/chunks/09do_next_dist_0y9hd5u._.js:2431:13)
+ GET /chat 200 in 22ms (next.js: 3ms, application-code: 19ms)

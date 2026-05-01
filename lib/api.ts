@@ -45,6 +45,66 @@ export class ApiError extends Error {
   }
 }
 
+export type ChatAPIMessage = {
+  role: "system" | "user" | "assistant";
+  content: string;
+};
+
+export async function streamChatCompletion(
+  messages: ChatAPIMessage[],
+  onDelta: (content: string) => void,
+  signal?: AbortSignal,
+) {
+  const res = await fetch(`${BASE}/chat/completions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ messages, stream: true }),
+    signal,
+  });
+  if (!res.ok || !res.body) {
+    const body = await res.text().catch(() => "");
+    throw new ApiError(res.status, body || res.statusText);
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    let boundary = buffer.indexOf("\n\n");
+    while (boundary !== -1) {
+      const raw = buffer.slice(0, boundary).trim();
+      buffer = buffer.slice(boundary + 2);
+      boundary = buffer.indexOf("\n\n");
+
+      if (!raw) continue;
+      const lines = raw.split(/\r?\n/);
+      const event = lines
+        .find((line) => line.startsWith("event:"))
+        ?.slice("event:".length)
+        .trim();
+      const data = lines
+        .filter((line) => line.startsWith("data:"))
+        .map((line) => line.slice("data:".length).trim())
+        .join("\n");
+
+      if (event === "done") return;
+      if (!data) continue;
+
+      const parsed = JSON.parse(data) as { content?: string; error?: string };
+      if (event === "error" || parsed.error) {
+        throw new ApiError(502, parsed.error ?? "AI provider request failed");
+      }
+      if (parsed.content) onDelta(parsed.content);
+    }
+  }
+}
+
 export const api = {
   // --- Public ---
   listPosts(params: { page?: number; size?: number; tag?: string } = {}) {

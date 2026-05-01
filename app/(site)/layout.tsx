@@ -54,6 +54,9 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
             <NavLink href="/tags" className="hidden md:inline-block">
               Tags
             </NavLink>
+            <NavLink href="/chat" className="hidden md:inline-block">
+              Chat
+            </NavLink>
             <NavLink href="/now" className="hidden md:inline-block">
               Now
             </NavLink>
