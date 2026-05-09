@@ -1,10 +1,13 @@
 import type {
   AdminSiteSettings,
   AuditLogEntry,
+  ChatMemory,
   Comment,
   LoginResponse,
   PaginatedResponse,
   Post,
+  ServerChatMessage,
+  ServerChatSession,
   SiteSettings,
   UploadResponse,
 } from "./types";
@@ -45,21 +48,115 @@ export class ApiError extends Error {
   }
 }
 
+export type ChatContentPart =
+  | { type: "text"; text: string }
+  | {
+      type: "image_url";
+      image_url: { url: string; detail?: "auto" | "low" | "high" };
+    };
+
 export type ChatAPIMessage = {
   role: "system" | "user" | "assistant";
-  content: string;
+  content: string | ChatContentPart[];
+};
+
+// Client-side attachment shape kept beside Message in localStorage.
+//
+// kind: "image"  — `url` is a data:image/* URL (pasted/uploaded local file)
+//                  or an https:// URL (link pasted into the input box).
+//                  Forwarded to the model as an image_url part.
+// kind: "text"   — `text` holds the extracted plaintext from a PDF or code
+//                  file (parsed client-side via pdfjs / FileReader). `url`
+//                  is unused here — the chip is rendered from `name` and
+//                  `size`. Inlined into the user-message text part as a
+//                  fenced block so the model can read it.
+export type ChatAttachment = {
+  id: string;
+  kind: "image" | "text";
+  url: string;
+  text?: string;
+  name?: string;
+  size?: number;
+  mime?: string;
+};
+
+// Merge text + attachments into the OpenAI-compatible content shape.
+// Returns a plain string when there are no image attachments so the wire
+// payload stays small for text-only messages. Text-kind attachments are
+// inlined into the text part as a fenced block — they're not separate
+// content parts on the wire.
+export function toApiContent(
+  text: string,
+  attachments?: ChatAttachment[],
+): string | ChatContentPart[] {
+  if (!attachments || attachments.length === 0) return text;
+
+  // Build the assembled text body: original text, then each text-kind
+  // attachment as a fenced block. The model treats this as one user turn.
+  const textBlocks: string[] = [];
+  if (text.trim()) textBlocks.push(text);
+  const images = attachments.filter((a) => a.kind === "image");
+  const texts = attachments.filter((a) => a.kind === "text" && a.text);
+  for (const a of texts) {
+    const label = a.name ?? "attached file";
+    textBlocks.push(
+      `\n\n--- file: ${label} ---\n${a.text}\n--- end file: ${label} ---`,
+    );
+  }
+  const body = textBlocks.join("");
+
+  if (images.length === 0) {
+    // Pure text + text attachments → keep wire payload as a string.
+    return body;
+  }
+
+  // Has images → must use multimodal parts array.
+  const parts: ChatContentPart[] = [];
+  if (body.trim()) parts.push({ type: "text", text: body });
+  for (const a of images) {
+    parts.push({ type: "image_url", image_url: { url: a.url } });
+  }
+  return parts;
+}
+
+export interface ChatStreamOptions {
+  webSearch?: boolean;
+  deepThinking?: boolean;
+  /** Model id to override the server default. Should match a value from
+   * `getChatConfig().models` — unknown ids are silently dropped server-side. */
+  model?: string;
+  /** Fired once per unique tool name detected in the response stream — used
+   * to badge the assistant message ("· web search used"). Many upstream
+   * providers (notably OpenAI's Responses-style web_search_preview) digest
+   * tool calls server-side and only stream final text, in which case this
+   * never fires. That's an acceptable degradation. */
+  onTool?: (name: string) => void;
+}
+
+/** Capability descriptor returned by the backend so the UI can render the
+ * model picker (or hide it when only one model is configured). */
+export type ChatConfig = {
+  models: string[];
+  default: string;
+  configured: boolean;
 };
 
 export async function streamChatCompletion(
   messages: ChatAPIMessage[],
   onDelta: (content: string) => void,
   signal?: AbortSignal,
+  options?: ChatStreamOptions,
 ) {
+  const body: Record<string, unknown> = { messages, stream: true };
+  if (options?.webSearch) body.web_search = true;
+  if (options?.deepThinking) body.deep_thinking = true;
+  if (options?.model) body.model = options.model;
+
   const res = await fetch(`${BASE}/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ messages, stream: true }),
+    body: JSON.stringify(body),
     signal,
   });
   if (!res.ok || !res.body) {
@@ -96,13 +193,32 @@ export async function streamChatCompletion(
       if (event === "done") return;
       if (!data) continue;
 
-      const parsed = JSON.parse(data) as { content?: string; error?: string };
+      const parsed = JSON.parse(data) as { content?: string; error?: string; name?: string };
       if (event === "error" || parsed.error) {
         throw new ApiError(502, parsed.error ?? "AI provider request failed");
+      }
+      if (event === "tool") {
+        if (options?.onTool && parsed.name) options.onTool(parsed.name);
+        continue;
       }
       if (parsed.content) onDelta(parsed.content);
     }
   }
+}
+
+/** Fetch the chat capability descriptor. Returns a normalized fallback when
+ * the endpoint is unreachable so the UI can still render with a sensible
+ * default rather than crashing. */
+export async function getChatConfig(): Promise<ChatConfig> {
+  const res = await fetch(`${BASE}/chat/config`, {
+    method: "GET",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new ApiError(res.status, body || res.statusText);
+  }
+  return (await res.json()) as ChatConfig;
 }
 
 export const api = {
@@ -438,5 +554,127 @@ export const api = {
       `/admin/audit${q.toString() ? `?${q}` : ""}`,
       { token, cache: "no-store" },
     );
+  },
+
+  // --- Admin Chat Memories ---
+  adminListMemories(token: string) {
+    return request<{ items: ChatMemory[]; total: number }>(
+      `/admin/chat/memories`,
+      { token, cache: "no-store" },
+    );
+  },
+
+  adminDeleteMemory(token: string, id: number) {
+    return request<void>(`/admin/chat/memories/${id}`, {
+      token,
+      method: "DELETE",
+    });
+  },
+
+  // --- Admin Chat Session Sync (server-side persistence for admin) ---
+  adminListChatSessions(token: string) {
+    return request<{ items: ServerChatSession[]; total: number }>(
+      `/admin/chat/sessions`,
+      { token, cache: "no-store" },
+    );
+  },
+
+  adminUpsertChatSession(
+    token: string,
+    body: { clientId: string; title: string; pinned?: boolean },
+  ) {
+    return request<ServerChatSession>(`/admin/chat/sessions`, {
+      token,
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  adminPatchChatSession(
+    token: string,
+    clientId: string,
+    body: { title?: string; pinned?: boolean },
+  ) {
+    return request<ServerChatSession>(
+      `/admin/chat/sessions/${encodeURIComponent(clientId)}`,
+      {
+        token,
+        method: "PATCH",
+        body: JSON.stringify(body),
+      },
+    );
+  },
+
+  adminDeleteChatSession(token: string, clientId: string) {
+    return request<void>(`/admin/chat/sessions/${encodeURIComponent(clientId)}`, {
+      token,
+      method: "DELETE",
+    });
+  },
+
+  adminListSessionMessages(token: string, clientId: string) {
+    return request<{ items: ServerChatMessage[]; total: number }>(
+      `/admin/chat/sessions/${encodeURIComponent(clientId)}/messages`,
+      { token, cache: "no-store" },
+    );
+  },
+
+  adminUpsertSessionMessage(
+    token: string,
+    clientId: string,
+    body: {
+      clientId: string;
+      role: "user" | "assistant" | "system";
+      content: string;
+      attachments?: unknown;
+      tools?: unknown;
+    },
+  ) {
+    return request<ServerChatMessage>(
+      `/admin/chat/sessions/${encodeURIComponent(clientId)}/messages`,
+      {
+        token,
+        method: "POST",
+        body: JSON.stringify(body),
+      },
+    );
+  },
+
+  adminDeleteSessionMessage(
+    token: string,
+    clientId: string,
+    msgClientId: string,
+  ) {
+    return request<void>(
+      `/admin/chat/sessions/${encodeURIComponent(clientId)}/messages/${encodeURIComponent(msgClientId)}`,
+      {
+        token,
+        method: "DELETE",
+      },
+    );
+  },
+
+  // --- Admin Chat Shares ---
+  adminCreateShare(token: string, body: { title: string; payload: unknown }) {
+    return request<{ hash: string; title: string }>(`/admin/chat/shares`, {
+      token,
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  // --- Public Chat Share read ---
+  getChatShare(hash: string) {
+    return request<{
+      hash: string;
+      title: string;
+      payload: unknown;
+      viewCount: number;
+      createdAt: string;
+    }>(`/chat/shares/${encodeURIComponent(hash)}`, {
+      // Server fire-and-forgets a view bump on each read; we still want
+      // fresh title/viewCount for the page's heading.
+      cache: "no-store",
+    });
   },
 };

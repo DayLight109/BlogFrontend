@@ -95,3 +95,42 @@ export interface AuditLogEntry {
   userAgent?: string;
   createdAt: string;
 }
+
+export interface ChatMemory {
+  id: number;
+  userId: number;
+  content: string;
+  sourceSessionId?: number | null;
+  createdAt: string;
+}
+
+export interface ServerChatSession {
+  id: number;
+  userId: number;
+  clientId: string;
+  title: string;
+  pinned: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ServerChatMessage {
+  id: number;
+  sessionId: number;
+  clientId: string;
+  role: "user" | "assistant" | "system";
+  content: string;
+  attachments?: unknown;
+  tools?: unknown;
+  createdAt: string;
+}
+
+export interface ChatShare {
+  id: number;
+  hash: string;
+  createdBy: number;
+  title: string;
+  payload: unknown;
+  viewCount: number;
+  createdAt: string;
+}
